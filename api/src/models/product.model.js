@@ -39,6 +39,11 @@ const ProductModel = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  sold: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model("Product", ProductModel);
