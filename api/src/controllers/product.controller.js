@@ -1,7 +1,7 @@
-const ProductModel = require("models/product.model");
-const UserModel = require("models/user.model");
+const ProductModel = require("../models/product.model");
+const UserModel = require("../models/user.model");
 
-exports.GetAllProductsByUser = (req, res, next) => {
+exports.GetAllProductsByUser = async (req, res, next) => {
   try {
     const { uid } = res.locals;
     const products = await ProductModel.find({ seller: uid });
@@ -19,7 +19,7 @@ exports.GetAllProductsByUser = (req, res, next) => {
   }
 };
 
-exports.GetAllProductsBySeller = (req, res, next) => {
+exports.GetAllProductsBySeller = async (req, res, next) => {
   try {
     const { seller } = req.params;
     const products = await ProductModel.find({ seller });
@@ -108,7 +108,7 @@ exports.AddProduct = async (req, res, next) => {
   }
 };
 
-exports.GetAllProductsBySIH = (req, res, next) => {
+exports.GetAllProductsBySIH = async (req, res, next) => {
   try {
     const { sih } = req.params;
     const products = await ProductModel.find({ sih });

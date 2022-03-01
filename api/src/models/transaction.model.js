@@ -25,7 +25,6 @@ const TransactionSchema = new mongoose.Schema({
   currency: {
     type: String,
     required: true,
-    enum: CURRENCY,
   },
   amountDue: {
     type: Number,

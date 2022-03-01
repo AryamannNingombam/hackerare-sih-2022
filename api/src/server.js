@@ -71,8 +71,14 @@ mongoose
         message: "Welcome to my API",
       });
     });
-    app.use("/auth", require("routes/auth.routes"));
-    app.use("/sih", require("routes/sih.routes"));
+    app.use("/api/auth", require("./routes/auth.routes"));
+    app.use("/api/sih", require("./routes/sih.routes"));
+    app.use("/api/address", require("./routes/address.routes"));
+    app.use("/api/product", require("./routes/product.routes"));
+    app.use("/api/transaction", require("./routes/transaction.routes"));
+    app.use("/api/sih-request", require("./routes/sih-request.routes"));
+    app.use("/api/user", require("./routes/user.routes"));
+
     const PORT = process.env.PORT || 8080;
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}.`);

@@ -1,6 +1,6 @@
-const TransactionModel = require("models/transaction.model");
+const TransactionModel = require("../models/transaction.model");
 
-export const GetAllTransactionsByUser = async (req, res, next) => {
+exports.GetAllTransactionsByUser = async (req, res, next) => {
   try {
     const { uid } = res.locals;
 

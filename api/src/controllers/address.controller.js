@@ -1,4 +1,4 @@
-const AddressModel = require("models/address.model");
+const AddressModel = require("../models/address.model");
 
 exports.EditAddress = async (req, res, next) => {
   try {
