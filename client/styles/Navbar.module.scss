@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+.navContainer {
+  width: 100vw;
+  height: 4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .navController {
+    display: flex;
+    flex-direction: row;
+    a {
+      font-family: Poppins;
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin: 0 1rem;
+    }
+  }
+}
