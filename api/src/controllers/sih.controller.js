@@ -1,4 +1,4 @@
-const SIHModel = require("models/sih.model");
+const SIHModel = require("../models/sih.model");
 
 exports.GetAllSIH = async (req, res, next) => {
   try {

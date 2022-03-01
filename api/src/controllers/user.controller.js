@@ -1,4 +1,4 @@
-const UserModel = require("models/user.model");
+const UserModel = require("../models/user.model");
 exports.GetUser = (req, res, next) => {
   try {
     const { uid } = res.locals.uid;

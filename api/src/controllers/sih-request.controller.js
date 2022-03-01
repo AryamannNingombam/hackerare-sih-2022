@@ -1,5 +1,5 @@
-const SIHRequestModel = require("models/sih-request.model");
-const SIHModel = require("models/sih.model");
+const SIHRequestModel = require("../models/sih-request.model");
+const SIHModel = require("../models/sih.model");
 
 exports.DenySIH = async (req, res, next) => {
   try {
