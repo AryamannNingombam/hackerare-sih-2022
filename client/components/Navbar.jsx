@@ -16,6 +16,7 @@ export default function Navbar() {
           <Input.Search
             size="large"
             placeholder="Search for Products, Self help groups and more"
+            className={styles.search}
           />
         </div>
       </div>
@@ -24,7 +25,7 @@ export default function Navbar() {
           <a>Self Help Groups</a>
           <a>Welfare Schemes</a>
           <a>Become a seller</a>
-          <CgProfile/>
+          <CgProfile style={{ fontSize:"1.2rem"}}/>
       </div>
     </div>
   );

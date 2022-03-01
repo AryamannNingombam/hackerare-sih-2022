@@ -2,10 +2,11 @@
 
 .navContainer {
   width: 100vw;
-  height: 4rem;
+  height: 5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 2rem 3rem ;
   .navController {
     display: flex;
     flex-direction: row;
@@ -13,7 +14,11 @@
       font-family: Poppins;
       font-weight: 600;
       font-size: 0.8rem;
-      margin: 0 1rem;
+      margin: 0 1.4rem;
+    }
+    .search{
+        margin: 0 2rem;
+        width: 30rem;
     }
   }
 }
