@@ -21,11 +21,11 @@ export default function Navbar() {
         </div>
       </div>
       <div className={styles.navController}>
-          <a>Explore Store</a>
-          <a>Self Help Groups</a>
-          <a>Welfare Schemes</a>
-          <a>Become a seller</a>
-          <CgProfile style={{ fontSize:"1.2rem"}}/>
+        <a>Explore Store</a>
+        <a>Self Help Groups</a>
+        <a>Welfare Schemes</a>
+        <a>Become a seller</a>
+        <CgProfile style={{ fontSize: "1.2rem" }} />
       </div>
     </div>
   );

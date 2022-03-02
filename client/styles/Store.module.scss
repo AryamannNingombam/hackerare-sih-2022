@@ -1,0 +1,27 @@
+.container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+
+  h1 {
+    font-family: Poppins;
+    width: 80%;
+    margin: 2rem auto;
+    font-weight: 600;
+  }
+  h2 {
+    font-family: Poppins;
+    width: 80%;
+    margin: auto;
+    font-weight: 600;
+  }
+  .cardController {
+    margin: auto;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}

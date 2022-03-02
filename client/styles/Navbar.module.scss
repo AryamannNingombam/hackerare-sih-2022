@@ -6,19 +6,23 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 2rem 3rem ;
+  padding: 2rem 3rem;
+  background-color: white;
   .navController {
     display: flex;
+    background-color: white;
     flex-direction: row;
     a {
       font-family: Poppins;
       font-weight: 600;
       font-size: 0.8rem;
       margin: 0 1.4rem;
+      background-color: white;
     }
-    .search{
-        margin: 0 2rem;
-        width: 30rem;
+    .search {
+      margin: 0 2rem;
+      width: 30rem;
+      background-color: white;
     }
   }
 }

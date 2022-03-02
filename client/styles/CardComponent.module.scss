@@ -1,0 +1,22 @@
+.cardContainer {
+  margin: 2rem 0;
+  width: 13rem;
+  height: auto;
+  .details {
+    display: flex;
+    flex-direction: row;
+    font-family: Poppins;
+    font-weight: 600;
+    justify-content: space-around;
+  }
+  .detailsTwo {
+    display: flex;
+    flex-direction: column;
+    font-family: Poppins;
+    font-weight: 600;
+    span{
+        color: #5C5C5C;
+        font-size: 0.8rem;
+    }
+  }
+}
