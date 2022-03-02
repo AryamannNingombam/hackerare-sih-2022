@@ -11,7 +11,7 @@ exports.SignIn = async (req, res, next) => {
       });
     }
 
-    let jwtHash = process.env.JWT_TOKEN_VALUE;
+    let jwtHash = process.env.JWT_TOKEN_USER;
     const user = await UserModel.findOne({
       email,
       verified: true,
@@ -53,18 +53,8 @@ exports.SignIn = async (req, res, next) => {
 
 exports.SignUp = async (req, res, next) => {
   try {
-    const { username, email } = req.body;
+    const { email } = req.body;
 
-    //checking if the username or email already exists;
-    const usernameCheck = await UserModel.find({
-      username,
-    });
-    if (usernameCheck.length !== 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Username already exists!",
-      });
-    }
     const emailCheck = await UserModel.find({
       email,
     });

@@ -125,3 +125,31 @@ exports.GetAllProductsBySIH = async (req, res, next) => {
     });
   }
 };
+
+exports.FilterProducts = async (req, res, next) => {
+  try {
+    const { query } = req.query;
+    const products = await ProductModel.aggregate([
+      { $match: { name: { $regex: query, $options: "i" } } },
+      {
+        $addFields: {
+          score: {
+            $indexOfCP: [{ $toLower: "$name" }, { $toLower: query }],
+          },
+        },
+      },
+      { $sort: { score: 1 } },
+    ]);
+    return res.status(200).json({
+      success: true,
+      products,
+    });
+  } catch (err) {
+    console.log("ERROR");
+    console.log(err);
+    return res.status(400).json({
+      success: false,
+      message: "UNKNOWN SERVER ERROR",
+    });
+  }
+};
