@@ -1,6 +1,6 @@
 const ProductModel = require("../models/product.model");
 const UserModel = require("../models/user.model");
-
+const TransactionModel = require("../models/transaction.model");
 exports.GetAllProductsByUser = async (req, res, next) => {
   try {
     const { uid } = res.locals;
@@ -118,6 +118,27 @@ exports.GetAllProductsBySIH = async (req, res, next) => {
     });
   } catch (err) {
     console.log("error");
+    console.log(err);
+    return res.status(400).json({
+      success: false,
+      message: "UNKNOWN SERVER ERROR",
+    });
+  }
+};
+
+exports.SellProduct = async (req, res, next) => {
+  try {
+    const { _id, transaction } = req.body;
+    const product = await ProductModel.findOne({ _id });
+    product.sales += 1;
+    await new TransactionModel(transaction);
+    return res.status(200).json({
+      success: true,
+      product,
+      transaction,
+    });
+  } catch (err) {
+    console.log("ERROR");
     console.log(err);
     return res.status(400).json({
       success: false,

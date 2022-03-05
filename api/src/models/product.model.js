@@ -39,7 +39,7 @@ const ProductModel = new mongoose.Schema({
     type: [String],
     default: [],
   },
-  sold: {
+  sales: {
     type: Number,
     required: true,
     default: 0,
