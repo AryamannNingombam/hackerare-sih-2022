@@ -4,27 +4,38 @@ import styles from "../styles/Login.module.scss";
 import Link from "next/link";
 import { Button, Card, Form, Input } from "antd";
 
-export default function login() {
+export default function register() {
   return (
     <>
       <Navbar />
-      <div className={styles.loginContainer}>
+      <div className={styles.registerContainer}>
         <Card className={styles.formCard}>
-          <h1>Login with your email</h1>
+          <h1>Sign up with your email</h1>
           <span>
-            New here?
-            <Link href="/register">
-              <a>Sign up</a>
+            Already have an account?
+            <Link href="/login">
+              <a>Sign In</a>
             </Link>
           </span>
           <Form
-            name="login-form"
+            name="register-form"
             initialValues={{ remember: true }}
             onSubmitCapture={(e) => {
               e.preventDefault();
               console.log("submit");
             }}
           >
+            <Form.Item
+              name="Full Name"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Full Name!",
+                },
+              ]}
+            >
+              <Input placeholder="Full name" />
+            </Form.Item>
             <Form.Item
               name="email"
               rules={[
@@ -52,7 +63,7 @@ export default function login() {
               htmlType="submit"
               className={styles.loginButton}
             >
-              Log in
+              Continue
             </Button>
           </Form>
         </Card>
