@@ -1,4 +1,4 @@
-import CardComponentSecondary from "../components/CardComponentsecond";
+import CardComponentSecondary from "../components/CardComponentSecond";
 import CardComponent from "../components/CardComponent";
 import Navbar from "../components/Navbar";
 import styles from "../styles/Store.module.scss";
