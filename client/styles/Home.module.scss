@@ -1,0 +1,25 @@
+.container {
+  background: url("../pages/assets/Landing.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: calc(100vh - 5rem);
+  width: 100%;
+  display: flex;
+
+  .LeftSection {
+    flex: 1.5;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    padding: 0 2rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  .RightSection {
+    width: 100%;
+    flex: 1;
+  }
+}
