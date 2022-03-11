@@ -57,11 +57,8 @@ exports.GetAllProducts = async (req, res, next) => {
 exports.GetProductDetails = async (req, res, next) => {
   try {
     const { _id } = req.params;
-    const product = await ProductModel.find({ _id });
-    return res.status(200).json({
-      success: true,
-      product,
-    });
+    const product = await ProductModel.findOne({ _id });
+    return res.status(200).json(product);
   } catch (err) {
     console.log("error");
     console.log(err);

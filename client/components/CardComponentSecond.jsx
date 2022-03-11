@@ -1,19 +1,16 @@
 import React from "react";
-import { Card } from "antd";
-import styles from "../styles/CardComponent.module.scss";
-import cardpic from "./assets/cardpic.jpg";
+import styles from "../styles/CardComponentSecondary.module.scss";
+import cardpicTwo from "./assets/cardpicTwo.jpg";
 import Image from "next/image";
 
 export default function CardComponent() {
   return (
-    <div>
-      <Card className={styles.cardContainer}>
-        <Image src={cardpic} />
-        <div className={styles.detailsTwo}>
-          Ningombam Crafts
-          <span>Manipur, India</span>
-        </div>
-      </Card>
+    <div className={styles.cardContainer}>
+      <div className={styles.cardpic}>
+        <Image src={cardpicTwo}  />
+      </div>
+      <h2>Ningombam Crafts</h2>
+      <h3>Rajasthan</h3>
     </div>
   );
 }
