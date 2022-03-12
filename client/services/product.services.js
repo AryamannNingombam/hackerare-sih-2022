@@ -12,4 +12,10 @@ export const GetProductDetails = async (uid)=>{
 
 }
 
+export const GetAllProductsBySIH = async (uid)=>{
+  const response = await axios.get(`${BACKEND_URL}/product/get-all-by-sih/${uid}`);
+  return response.data
+
+}
+
 // const sihService = new SIHService();

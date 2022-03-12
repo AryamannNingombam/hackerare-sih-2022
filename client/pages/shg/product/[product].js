@@ -5,12 +5,89 @@ import { AiOutlineShopping } from "react-icons/ai";
 import { useQuery } from "react-query";
 import { GetProductDetails } from "services/product.services";
 import CardComponent from "components/CardComponentSecond";
+import { CreateOrder } from "services/razorpay.service";
 
 export default function Product({ product }) {
   const { data: productDetails, isLoading } = useQuery("productdetails", () =>
     GetProductDetails(product)
   );
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
+  const displayRazorpay = async (e) => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+
+    if (!res) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+    const result = await CreateOrder({
+      _id: product,
+    });
+
+    if (!result) {
+      alert("Server error. Are you online?");
+      return;
+    }
+    const { order } = result;
+    const { amount, id: order_id, currency } = order;
+
+    const options = {
+      key: "rzp_test_d0Oa7LSuh21z8z", // Enter the Key ID generated from the Dashboard
+      amount: amount.toString(),
+      currency: currency,
+      name: "Svayam",
+      description: "Test Transaction",
+      image: "https://bugbase.in/static/media/BugBaseFullFinal.181dc571.svg",
+      order_id: order_id,
+      handler: async function (response) {
+        const data = {
+          orderCreationId: order_id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+          razorpaySignature: response.razorpay_signature,
+        };
+        // @TODO Payment success returns stuff
+        console.log("HELLLLOOO");
+        const buyRequest = await DirectBuyListedProduct({
+          soldPrice: selectedItem.askPrice,
+          _id: selectedItem._id,
+        });
+        console.log(buyRequest);
+      },
+      prefill: {
+        name: "Sitaraman",
+        email: "sitaraman@gmail.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Some random address",
+      },
+      theme: {
+        color: "#61dafb",
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  };
   console.log(productDetails);
+  const onBuyNowClick = (e) => {
+    displayRazorpay();
+  };
   return (
     <>
       <Navbar />
@@ -46,7 +123,11 @@ export default function Product({ product }) {
               <div className={styles.colTwo}>
                 <h1>{productDetails.name}</h1>
                 <h2>₹ {productDetails.sellPrice}</h2>
-                <Button type="primary" className={styles.button}>
+                <Button
+                  onClick={onBuyNowClick}
+                  type="primary"
+                  className={styles.button}
+                >
                   Buy Now
                 </Button>
                 <Button type="primary" className={styles.buttonTwo}>

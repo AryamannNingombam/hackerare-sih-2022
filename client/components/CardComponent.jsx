@@ -1,13 +1,13 @@
 import React from "react";
 import { Card } from "antd";
 import styles from "../styles/CardComponent.module.scss";
-import Image from "next/image";
+import { Image } from 'antd';
 import { CgArrowRight } from "react-icons/cg";
 import { useRouter } from "next/router";
 export default function CardComponentSecondary({
   name,
   image,
-  descrption,
+  description,
   id,
 }) {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function CardComponentSecondary({
         {name}
         <CgArrowRight style={{ fontSize: "1.4rem", color: "#FF8A1B" }} />
       </div>
-      <p>{descrption}</p>
+      <p>{description}</p>
     </Card>
   );
 }
