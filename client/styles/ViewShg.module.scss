@@ -2,6 +2,7 @@
   margin: auto;
   display: flex;
   flex-direction: column;
+  padding-bottom: 4rem;
   .breadcrumb {
     width: 80%;
     margin: auto;
@@ -11,11 +12,12 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: center;
     .shgPic {
       margin: auto;
       height: 24rem;
       width: 24rem;
-
+      object-fit: cover;
       // img {
       //   border-radius: 50%;
       // }
