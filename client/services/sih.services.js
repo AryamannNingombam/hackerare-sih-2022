@@ -24,4 +24,9 @@ export const GetSIHDetails = async (uid) => {
   return response.data;
 };
 
+export const AddSIH = async (body) => {
+  const response = await axios.post(`${BACKEND_URL}/sih/make`, body);
+  return response.data;
+};
+
 // const sihService = new SIHService();

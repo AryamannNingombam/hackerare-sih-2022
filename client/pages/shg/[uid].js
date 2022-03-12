@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { GetSIHDetails } from "services/sih.services";
+import UserImage from "pages/assets/user.svg";
 
 export default function ViewSHG({ uid }) {
   console.log("UIS", uid);
@@ -28,7 +29,7 @@ export default function ViewSHG({ uid }) {
         </Breadcrumb>
         <div className={styles.colController}>
           <div className={styles.shgPic}>
-            <Image src={ningombam} />
+            <Image src={shg?.profileImage ? shg.profileImage : UserImage} />
           </div>
           <h1>{shg?.name}</h1>
           <h2>{shg?.state}</h2>

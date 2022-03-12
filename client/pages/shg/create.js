@@ -3,13 +3,27 @@ import React from "react";
 import styles from "styles/Login.module.scss";
 import { Button, Card, Form, Input, message } from "antd";
 import { useRouter } from "next/router";
-
+import { UploadOnIPFS } from "services/ipfs.service";
+import { AddSIH } from "services/sih.services";
 export default function create() {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
   const router = useRouter();
   const onFormSubmit = async (values) => {
-    console.log(values);
+    try {
+      const ipfsImages = await values.images.map(async (image) => {
+        const url = await UploadOnIPFS(image);
+        return url;
+      });
+      const response = await AddSIH({
+        ...values,
+        images: ipfsImages,
+      });
+      console.log(response);
+      message.success("Successfully added Sih");
+    } catch (err) {
+      console.log("ERROR");
+      console.log(err);
+      message.error("error creating shg");
+    }
   };
   return (
     <>
@@ -49,59 +63,26 @@ export default function create() {
               />
             </Form.Item>
             <Form.Item
-              name="gstin"
+              name="phoneNumber"
               rules={[
                 {
                   required: true,
-                  message: "Please input your email!",
-                },
-              ]}
-            >
-              <Input placeholder="GSTIN Number" />
-            </Form.Item>
-            <Form.Item
-              name="phone"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
+                  message: "Please input your phone number!",
                 },
               ]}
             >
               <Input placeholder="Phone Number" />
             </Form.Item>
             <Form.Item
-              name="Address"
+              name="state"
               rules={[
                 {
                   required: true,
-                  message: "Please input your email!",
-                },
-              ]}
-            >
-              <Input placeholder="Address" />
-            </Form.Item>
-            <Form.Item
-              name="State"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
+                  message: "Please input your State!",
                 },
               ]}
             >
               <Input placeholder="State" />
-            </Form.Item>
-            <Form.Item
-              name="City"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
-                },
-              ]}
-            >
-              <Input placeholder="City" />
             </Form.Item>
             <Button
               type="primary"

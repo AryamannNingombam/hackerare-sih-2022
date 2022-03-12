@@ -13,6 +13,9 @@
     flex-direction: column;
     .shgPic {
       margin: auto;
+      height: 6rem;
+      width: 6rem;
+
       img {
         border-radius: 50%;
       }
@@ -42,8 +45,8 @@
       h1 {
         font-size: 1.3rem;
         cursor: pointer;
-        &:hover{
-            color: #FF8A1B;
+        &:hover {
+          color: #ff8a1b;
         }
       }
       h2 {
