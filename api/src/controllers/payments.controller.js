@@ -16,7 +16,7 @@ exports.InititiateProductTransaction = async (req, res, next) => {
         message: "ERROR_PRODUCT_LISTING_NOT_FOUND",
       });
     const order = await RazorpayServices.InitiatePay(
-      productListing.askPrice * 100
+      productListing.sellPrice * 100
     );
     return res.status(200).json({
       success: true,
