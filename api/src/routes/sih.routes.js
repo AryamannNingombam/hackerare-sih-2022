@@ -6,4 +6,5 @@ const router = express.Router();
 router.get("/get-all", controller.GetAllSIH);
 router.post("/make", CheckJWT, controller.AddSIH);
 router.get("/get-details/:_id", controller.GetSIHDetails);
+router.get("/get-user-sih",CheckJWT,controller.GetUserSIH)
 module.exports = router;
