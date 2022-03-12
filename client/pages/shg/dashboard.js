@@ -15,6 +15,7 @@ import {
 } from "services/sih.services";
 import ModalComponent from "components/ModalComponent";
 import ningombam from "pages/assets/ningombam.jpg";
+
 export default function SHGDashboard() {
   const { data: shg } = useQuery("shg", GetUserSIH);
   const { data: requests } = useQuery("requests", GetAllSIHRequests);
@@ -70,8 +71,8 @@ export default function SHGDashboard() {
             <div className={styles.shgPic}>
               <Image src={UserImage} />
             </div>
-            <h1>Ningombam Crafts</h1>
-            <h2>Rajasthan</h2>
+            <h1>{shg?.name}</h1>
+            <h2>{shg?.state}</h2>
             <div className={styles.btnController}>
               <Button className={styles.editProfile}>EDIT PROFILE</Button>
               <Button className={styles.manageProducts}>MANAGE PRODUCTS</Button>
@@ -85,28 +86,14 @@ export default function SHGDashboard() {
               </Button>
             </div>
             <div className={styles.stats}>
-              <h1>30</h1>
+              <h1>{shg?.members?.length}</h1>
               <h2>Members</h2>
-              <h1>10</h1>
+              <h1>{shg?.products?.length}</h1>
               <h2>Products</h2>
             </div>
             <h3>DESCRIPTION</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-              tellus purus, laoreet at eros eget, ultricies consequat tellus.
-              Curabitur nec sagittis nisl, eu porttitor massa. Ut posuere semper
-              luctus. Aliquam nunc ex, ornare non mattis sed, scelerisque non
-              nisl. Vivamus convallis bibendum urna eget consequat. Lorem ipsum
-              dolor sit amet, consectetur adipiscing elit. Etiam tellus purus,
-              laoreet at eros eget, ultricies consequat tellus. Curabitur nec
-              sagittis nisl, eu porttitor massa. Ut posuere semper luctus.
-              Aliquam nunc ex, ornare non mattis sed, scelerisque non nisl.
-              Vivamus convallis bibendum urna eget consequat. Lorem ipsum dolor
-              sit amet, consectetur adipiscing elit. Etiam tellus purus, laoreet
-              at eros eget, ultricies consequat tellus. Curabitur nec sagittis
-              nisl, eu porttitor massa. Ut posuere semper luctus. Aliquam nunc
-              ex, ornare non mattis sed, scelerisque non nisl. Vivamus convallis
-              bibendum urna eget consequat.{" "}
+            {shg?.description}
             </p>
             <h3 className={styles.exploreHeading}>PRODUCTS</h3>
             {/* <div className={styles.exploreSection}>
