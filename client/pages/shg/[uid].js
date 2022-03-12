@@ -1,12 +1,12 @@
 import CardComponent from "components/CardComponent";
 import Navbar from "components/Navbar";
 import styles from "styles/ViewShg.module.scss";
-import { Breadcrumb, Button } from "antd";
+import { Breadcrumb, Button, message } from "antd";
 import ningombam from "pages/assets/ningombam.jpg";
 import { Image } from "antd";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
-import { GetSIHDetails } from "services/sih.services";
+import { GetSIHDetails, RequestSIH } from "services/sih.services";
 import UserImage from "pages/assets/user.svg";
 import { GetAllProductsBySIH } from "services/product.services";
 
@@ -17,7 +17,19 @@ export default function ViewSHG({ uid }) {
     GetAllProductsBySIH(uid)
   );
   console.log(shgProducts);
-
+  const OnRequestJoin = async (e) => {
+    try {
+      const response = await RequestSIH({
+        sih: uid,
+      });
+      console.log(response.data);
+      message.success("Request sent successfully");
+    } catch (err) {
+      console.log("ERROR");
+      console.log(err);
+      message.error("error sending request");
+    }
+  };
   return (
     <>
       <Navbar />
@@ -38,7 +50,9 @@ export default function ViewSHG({ uid }) {
           </div>
           <h1>{shg?.name}</h1>
           <h2>{shg?.state}</h2>
-          <Button className={styles.shgJoinBtn}>REQUEST TO JOIN</Button>
+          <Button onClick={OnRequestJoin} className={styles.shgJoinBtn}>
+            REQUEST TO JOIN
+          </Button>
           <div className={styles.stats}>
             <h1>{shg?.members?.length}</h1>
             <h2>{shg?.members?.length !== 1 ? "Members" : "Member"}</h2>

@@ -35,4 +35,18 @@ export const AddSIH = async (body) => {
   return response.data;
 };
 
+export const RequestSIH = async (body) => {
+  const token = GetJWTToken();
+  const response = await axios.post(
+    `${BACKEND_URL}/sih-request/request`,
+    body,
+    {
+      headers: {
+        token,
+      },
+    }
+  );
+  return response.data;
+};
+
 // const sihService = new SIHService();
