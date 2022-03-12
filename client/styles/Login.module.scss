@@ -76,3 +76,13 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.TagSelector {
+  .ant-select-selection-item-content {
+    margin: 0;
+  }
+
+  span {
+    margin: 0 !important;
+  }
+}
