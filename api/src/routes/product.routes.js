@@ -13,4 +13,5 @@ router.get("/get-all-by-sih/:sih", controller.GetAllProductsBySIH);
 router.get("/query", controller.FilterProducts);
 router.post("/buy", CheckJWT, paymentsController.InititiateProductTransaction);
 router.put("/buy", CheckJWT, paymentsController.BuyProduct);
+router.post("/get-similar-products", controller.GetSimilarProducts);
 module.exports = router;

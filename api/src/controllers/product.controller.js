@@ -1,6 +1,7 @@
 const ProductModel = require("../models/product.model");
 const UserModel = require("../models/user.model");
 const TransactionModel = require("../models/transaction.model");
+const { CosineSimilarity } = require("../services/cosine-similarity.service");
 exports.GetAllProductsByUser = async (req, res, next) => {
   try {
     const { uid } = res.locals;
@@ -169,5 +170,29 @@ exports.FilterProducts = async (req, res, next) => {
       success: false,
       message: "UNKNOWN SERVER ERROR",
     });
+  }
+};
+
+exports.GetSimilarProducts = async (req, res, next) => {
+  try {
+    const { text } = req.body;
+    if (text)
+      return res.status(400).json({
+        success: false,
+        message: "TEXT_NOT_PROVIDED",
+      });
+    const allProducts = await ProductModel.find();
+    const cosine = allProducts.map((p) => {
+      const c = CosineSimilarity(text, p.name);
+      const cd = CosineSimilarity(text, p.description);
+      return {
+        ...p._doc,
+        score: Math.max(c, cd),
+      };
+    });
+    return res.status(200).json(cosine);
+  } catch (err) {
+    console.log("ERROR");
+    console.log(err);
   }
 };
