@@ -96,6 +96,7 @@
         font-size: 1rem;
       }
     }
+   
     h3 {
       width: 80%;
       margin: auto;
@@ -106,4 +107,26 @@
       color: #8c8c8c;
     }
   }
+}
+
+.user{
+  width:100%;
+  display:flex;
+  flex-direction:row;
+  justify-content: space-between;
+  .left{
+    display:flex;
+    flex-direction:row;
+    .image{
+      width:100px;
+      height:100px;
+      border-radius:50%;
+    }
+  }
+  .right{
+    .button{
+
+    }
+  }
+ 
 }

@@ -58,3 +58,27 @@ export const GetUserSIH = async ()=>{
   })
   return response.data;
 }
+
+export const GetAllSIHRequests  = async ()=>{
+  const token = GetJWTToken();
+  const response = await axios.get(`${BACKEND_URL}/sih-request/get-all`,{
+    headers:{token}
+  })
+  return response.data;
+}
+
+export const AcceptUserRequest =async  (_id)=>{
+  const token = GetJWTToken();
+  const response = await axios.post(`${BACKEND_URL}/sih-request/accept/${_id}`,{},{
+    headers:{token}
+  })
+  return response.data;
+} 
+
+export const RejectUserRequest = async (_id)=>{
+  const token = GetJWTToken();
+  const response = await axios.post(`${BACKEND_URL}/sih-request/reject/${_id}`,{},{
+    headers:{token}
+  })
+  return response.data;
+}

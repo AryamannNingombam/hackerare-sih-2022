@@ -1,16 +1,19 @@
+const sihRequestModel = require("../models/sih-request.model");
 const SIHRequestModel = require("../models/sih-request.model");
 const SIHModel = require("../models/sih.model");
+const userModel = require("../models/user.model");
 
 exports.DenySIH = async (req, res, next) => {
   try {
     const { _id } = req.params;
     const SIHRequest = await SIHRequestModel.deleteOne({ _id });
     const sih = await SIHModel.findById(SIHRequest.sih);
-    if (sih.owner !== res.locals.uid)
+    if (sih.owner.toString() !== res.locals.uid)
       return res.status(400).json({
         success: false,
         message: "ERROR_NOT_AUTHORIZED",
       });
+    await SIHRequest.delete();
     return res.status(200).json({
       success: true,
       message: "SIH Request Denied",
@@ -28,14 +31,17 @@ exports.DenySIH = async (req, res, next) => {
 exports.ApproveSIH = async (req, res, next) => {
   try {
     const { _id } = req.params;
-    const SIHRequest = await SIHRequestModel.findOne({ _id });
+    console.log(_id);
+    const SIHRequest = await SIHRequestModel.findOne({ user:_id });
     const sih = await SIHModel.findById(SIHRequest.sih);
-    if (sih.owner !== res.locals.uid)
+    console.log(sih);
+    if (sih.owner.toString() !== res.locals.uid)
       return res.status(400).json({
         success: false,
         message: "ERROR_NOT_AUTHORIZED",
       });
-    await sih.AddMember(SIHRequest.user);
+    sih.members.push(_id);
+    await sih.save();
     await SIHRequest.remove();
     return res.status(200).json({
       success: true,
@@ -72,3 +78,30 @@ exports.RequestSIH = async (req, res, next) => {
     });
   }
 };
+
+
+exports.GetAllRequests = async(req,res,next)=>{
+  try{
+    const sih = await SIHModel.findOne({
+      owner:res.locals.uid,
+    })
+    const requests = await sihRequestModel.find({
+      sih:sih._id
+    })
+    const response = [];
+    for (let r of requests){
+      const userDetails = await userModel.findOne({_id:r.user})
+      response.push(userDetails)
+    }
+    return res.status(200).json(response);
+ 
+  }catch(err){  
+    console.log("ERROR");
+    console.log(err);
+    return res.status(400)
+    .json({
+      success:false,
+      message:"UNKNOWN_SERVER_ERROR"
+    })
+  }
+}
