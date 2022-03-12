@@ -1,5 +1,5 @@
 import { Input } from "antd";
-import Image from "next/image";
+import { Image } from 'antd';
 import React from "react";
 import swayamLogo from "./assets/svayam-logo.svg";
 import styles from "../styles/Navbar.module.scss";

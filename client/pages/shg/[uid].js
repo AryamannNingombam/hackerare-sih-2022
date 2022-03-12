@@ -3,16 +3,19 @@ import Navbar from "components/Navbar";
 import styles from "styles/ViewShg.module.scss";
 import { Breadcrumb, Button } from "antd";
 import ningombam from "pages/assets/ningombam.jpg";
-import Image from "next/image";
+import { Image } from 'antd';
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { GetSIHDetails } from "services/sih.services";
 import UserImage from "pages/assets/user.svg";
+import { GetAllProductsBySIH } from "services/product.services";
 
 export default function ViewSHG({ uid }) {
   console.log("UIS", uid);
   const { data: shg } = useQuery("shg", () => GetSIHDetails(uid));
-  console.log(shg);
+  const { data: shgProducts } = useQuery("shgProducts", () => GetAllProductsBySIH(uid));
+  console.log(shgProducts);
+
   return (
     <>
       <Navbar />
@@ -45,7 +48,7 @@ export default function ViewSHG({ uid }) {
         </div>
         <h3 className={styles.exploreHeading}>PRODUCTS</h3>
         <div className={styles.exploreSection}>
-          {shg?.products?.map((product) => {
+          {shgProducts?.products?.map((product) => {
             return (
               <CardComponent name={product.name} image={product.images[0]} />
             );

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../styles/CardComponentSecondary.module.scss";
 import cardpicTwo from "./assets/cardpicTwo.jpg";
-import Image from "next/image";
+import { Image } from 'antd';
 import { Card } from "antd";
 import { useRouter } from "next/router";
 
