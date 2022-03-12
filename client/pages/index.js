@@ -63,15 +63,15 @@ export default function Home() {
                         hoverable
                         className={styles.card}
                         style={{ width: 400, height: 500 }}
-                        // cover={
-                        //   <Image
-                        //     src={item.images[0]}
-                        //     height={200}
-                        //     width={350}
-                        //     objectFit="cover"
-                        //     className={styles.img}
-                        //   />
-                        // }
+                        cover={
+                          <Image
+                            src={item.images[0]}
+                            height={200}
+                            width={350}
+                            objectFit="cover"
+                            className={styles.img}
+                          />
+                        }
                       >
                         <div className={styles.cardContent}>
                           <div>
