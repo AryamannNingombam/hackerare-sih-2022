@@ -1,5 +1,5 @@
 import { Input } from "antd";
-import Image from "next/image";
+import { Image } from 'antd';
 import React from "react";
 import swayamLogo from "./assets/svayam-logo.svg";
 import styles from "../styles/Navbar.module.scss";
@@ -29,7 +29,7 @@ export default function Navbar() {
         <Link href="/store">
           <a>Explore Store</a>
         </Link>
-        <Link href="/login">
+        <Link href="/shg">
           <a>Self Help Groups</a>
         </Link>
         <Link href="/login">
