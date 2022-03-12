@@ -22,9 +22,16 @@ import handi from "./assets/handi.jpeg";
 import bowl from "./assets/bowl.jpg";
 
 import { Button, Card } from "antd";
-const { Meta } = Card;
+
+import { useQuery } from "react-query";
 
 export default function Home() {
+  // const {data, isLoading} = useQuery("get-listed-products", , {
+  //   onSuccess(){
+  //     console.log("Nice")
+  //   }
+  // });
+
   return (
     <>
       <Navbar />
@@ -33,7 +40,7 @@ export default function Home() {
           Now buy and sell handcrafted items from any corner of India.
         </div>
         <div className={styles.RightSection}>
-          <Swiper autoplay={{ delay: 1500 }} slidesPerView={1}>
+          <Swiper autoplay={{ delay: 1500 }} slidesPerView={1} navigation loop>
             <SwiperSlide
               style={{
                 display: "flex",
@@ -155,7 +162,7 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.WelfareSchemes}>
-        <Swiper autoplay spaceBetween={50} slidesPerView={2}>
+        <Swiper autoplay spaceBetween={50} slidesPerView={2} loop>
           <SwiperSlide
             style={{
               display: "flex",
