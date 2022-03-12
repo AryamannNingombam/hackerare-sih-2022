@@ -25,16 +25,16 @@ import { Button, Card } from "antd";
 
 import { useQuery } from "react-query";
 import { GetAll } from "services/sih.services";
+import { GetAllProducts } from "services/product.services";
 
 export default function Home() {
-  const { data, isLoading } = useQuery("get-listed-products", GetAll, {
+  const { data, isLoading } = useQuery("get-listed-products", GetAllProducts, {
     onSuccess() {
       console.log("Nice");
     },
   });
 
-  console.log("datta", data);
-
+  console.log(data);
   return (
     <>
       <Navbar />
@@ -43,114 +43,164 @@ export default function Home() {
           Now buy and sell handcrafted items from any corner of India.
         </div>
         <div className={styles.RightSection}>
-          <Swiper autoplay={{ delay: 1500 }} slidesPerView={1} navigation loop>
-            <SwiperSlide
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+          {isLoading ? (
+            <>Getting Items for you!</>
+          ) : (
+            <Swiper
+              autoplay={{ delay: 1500 }}
+              slidesPerView={1}
+              navigation
+              loop
             >
-              <Card
-                hoverable
-                className={styles.card}
-                style={{ width: 400 }}
-                cover={
-                  <Image
-                    src={basket}
-                    height={500}
-                    objectFit="cover"
-                    className={styles.img}
-                  />
-                }
+              {data.products.map((item, idx) => {
+                return (
+                  <SwiperSlide
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    key={idx}
+                  >
+                    <Card
+                      hoverable
+                      className={styles.card}
+                      style={{ width: 380, height: 500 }}
+                      cover={
+                        <Image
+                          src={item.images[0]}
+                          height={200}
+                          width={350}
+                          objectFit="cover"
+                          className={styles.img}
+                        />
+                      }
+                    >
+                      <div className={styles.cardContent}>
+                        <div>
+                          <h1>{item.name}</h1>
+                          <p>{item.description}</p>
+                        </div>
+                        <div>
+                          <h1>Rs. {item.sellPrice}</h1>
+                        </div>
+                      </div>
+                      <div className={styles.cardDesc}>
+                        Bidar is the centre for the manufacture of these unique
+                        metal handicrafts which developed during the 14th
+                        cent...
+                      </div>
+                    </Card>
+                  </SwiperSlide>
+                );
+              })}
+              {/* <SwiperSlide
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                <div className={styles.cardContent}>
-                  <div>
-                    <h1>Jute Bags</h1>
-                    <p>Sitaraman Crafts</p>
+                <Card
+                  hoverable
+                  className={styles.card}
+                  style={{ width: 400 }}
+                  cover={
+                    <Image
+                      src={basket}
+                      height={500}
+                      objectFit="cover"
+                      className={styles.img}
+                    />
+                  }
+                >
+                  <div className={styles.cardContent}>
+                    <div>
+                      <h1>Jute Bags</h1>
+                      <p>Sitaraman Crafts</p>
+                    </div>
+                    <div>
+                      <h1>Rs. 50</h1>
+                    </div>
                   </div>
-                  <div>
-                    <h1>Rs. 50</h1>
+                  <div className={styles.cardDesc}>
+                    Bidar is the centre for the manufacture of these unique
+                    metal handicrafts which developed during the 14th cent...
                   </div>
-                </div>
-                <div className={styles.cardDesc}>
-                  Bidar is the centre for the manufacture of these unique metal
-                  handicrafts which developed during the 14th cent...
-                </div>
-              </Card>
-            </SwiperSlide>
-            <SwiperSlide
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Card
-                hoverable
-                className={styles.card}
-                style={{ width: 400 }}
-                cover={
-                  <Image
-                    className={styles.card}
-                    src={handi}
-                    height={240}
-                    objectFit="cover"
-                  />
-                }
+                </Card>
+              </SwiperSlide>
+              <SwiperSlide
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                <div className={styles.cardContent}>
-                  <div>
-                    <h1>Handicrafts</h1>
-                    <p>Sitaraman Crafts</p>
+                <Card
+                  hoverable
+                  className={styles.card}
+                  style={{ width: 400 }}
+                  cover={
+                    <Image
+                      className={styles.card}
+                      src={handi}
+                      height={240}
+                      objectFit="cover"
+                    />
+                  }
+                >
+                  <div className={styles.cardContent}>
+                    <div>
+                      <h1>Handicrafts</h1>
+                      <p>Sitaraman Crafts</p>
+                    </div>
+                    <div>
+                      <h1>Rs. 90</h1>
+                    </div>
                   </div>
-                  <div>
-                    <h1>Rs. 90</h1>
+                  <div className={styles.cardDesc}>
+                    Bidar is the centre for the manufacture of these unique
+                    metal handicrafts which developed during the 14th cent...
                   </div>
-                </div>
-                <div className={styles.cardDesc}>
-                  Bidar is the centre for the manufacture of these unique metal
-                  handicrafts which developed during the 14th cent...
-                </div>
-              </Card>
-            </SwiperSlide>
-            <SwiperSlide
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Card
-                hoverable
-                className={styles.card}
-                style={{ width: 400 }}
-                cover={
-                  <Image
-                    className={styles.card}
-                    src={bowl}
-                    height={240}
-                    objectFit="cover"
-                  />
-                }
+                </Card>
+              </SwiperSlide>
+              <SwiperSlide
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                <div className={styles.cardContent}>
-                  <div>
-                    <h1>Traditional Bowls</h1>
-                    <p>Sitaraman Crafts</p>
+                <Card
+                  hoverable
+                  className={styles.card}
+                  style={{ width: 400 }}
+                  cover={
+                    <Image
+                      className={styles.card}
+                      src={bowl}
+                      height={240}
+                      objectFit="cover"
+                    />
+                  }
+                >
+                  <div className={styles.cardContent}>
+                    <div>
+                      <h1>Traditional Bowls</h1>
+                      <p>Sitaraman Crafts</p>
+                    </div>
+                    <div>
+                      <h1>Rs. 200</h1>
+                    </div>
                   </div>
-                  <div>
-                    <h1>Rs. 200</h1>
+                  <div className={styles.cardDesc}>
+                    Bidar is the centre for the manufacture of these unique
+                    metal handicrafts which developed during the 14th cent...
                   </div>
-                </div>
-                <div className={styles.cardDesc}>
-                  Bidar is the centre for the manufacture of these unique metal
-                  handicrafts which developed during the 14th cent...
-                </div>
-              </Card>
-            </SwiperSlide>
-            <Button>Explore Store</Button>
-          </Swiper>
+                </Card>
+              </SwiperSlide> */}
+            </Swiper>
+          )}
         </div>
       </div>
       <div className={styles.AboutSHG}>
