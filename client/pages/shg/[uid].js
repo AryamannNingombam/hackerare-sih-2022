@@ -28,7 +28,7 @@ export default function ViewSHG({ uid }) {
       router.push("/login");
     }
     const uid = user?.user?._id;
-    const member = shg.members.find((memberid) => memberid === uid);
+    const member = shg?.members.find((memberid) => memberid === uid);
     if (!member) {
       return -1;
     }

@@ -1,5 +1,5 @@
 import Navbar from "components/Navbar";
-import React,{useState} from "react";
+import React, { useState } from "react";
 import styles from "styles/Login.module.scss";
 import {
   Button,
@@ -7,7 +7,8 @@ import {
   Form,
   Input,
   Upload,
-  DatePicker,
+  Select,
+  Tag,
   message,
   Spin,
 } from "antd";
@@ -17,13 +18,12 @@ import { AddProduct } from "services/product.services";
 import { PlusOutlined } from "@ant-design/icons";
 import Image from "next/image";
 
-
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
+    reader.onerror = (error) => reject(error);
   });
 }
 
@@ -32,15 +32,11 @@ export default function addProduct() {
   //   name, description, sellPrice, releaseDate, images, labels;
   // }
 
-  const [ fileList,setFileList] = useState([])
-
+  const [fileList, setFileList] = useState([]);
 
   const router = useRouter();
 
-  const onFormSubmit = async (values) => {
-
-  };
-
+  const onFormSubmit = async (values) => {};
 
   const handleChange = ({ fileList }) => setFileList(fileList);
 
@@ -50,7 +46,31 @@ export default function addProduct() {
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
+  const options = [
+    { value: "gold" },
+    { value: "lime" },
+    { value: "green" },
+    { value: "cyan" },
+  ];
 
+  function tagRender(props) {
+    const { label, value, closable, onClose } = props;
+    const onPreventMouseDown = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    return (
+      <Tag
+        color={value}
+        onMouseDown={onPreventMouseDown}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginRight: 3 }}
+      >
+        {label}
+      </Tag>
+    );
+  }
 
   return (
     <>
@@ -65,13 +85,13 @@ export default function addProduct() {
               onFinish={onFormSubmit}
             >
               <Upload
-          listType="picture-card"
-          fileList={fileList}
-          onChange={handleChange}
-          multiple
-        >
-          {fileList.length >= 8 ? null : uploadButton}
-        </Upload>
+                listType="picture-card"
+                fileList={fileList}
+                onChange={handleChange}
+                multiple
+              >
+                {fileList.length >= 8 ? null : uploadButton}
+              </Upload>
               {/* <div>
                 <h3>Preview</h3>
                 {imageUrls.length > 0 &&
@@ -139,8 +159,17 @@ export default function addProduct() {
               >
                 <Input placeholder="Quantity" />
               </Form.Item>
-             
 
+              <Form.Item>
+                <Select
+                  mode="multiple"
+                  showArrow
+                  tagRender={tagRender}
+                  defaultValue={["gold", "cyan"]}
+                  style={{ width: "100%" }}
+                  options={options}
+                />
+              </Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"

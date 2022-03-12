@@ -25,7 +25,7 @@ import i3 from "./assets/3.png";
 import i4 from "./assets/4.png";
 import i5 from "./assets/5.png";
 
-import { Card } from "antd";
+import { Card, Row, Col } from "antd";
 
 import { useQuery } from "react-query";
 import { GetAllProducts } from "services/product.services";
@@ -276,7 +276,30 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={styles.ImageGrid}></div>
+      <div className={styles.AboutSHG}>
+        <Row gutter={[16, 16]}>
+          <Col span={8}>
+            <Image src={i0} objectFit="contain" />
+          </Col>
+          <Col span={8}>
+            <Image src={i1} objectFit="contain" />
+          </Col>
+          <Col span={8}>
+            <Image src={i2} objectFit="contain" />
+          </Col>
+        </Row>
+        <Row gutter={[16, 16]}>
+          <Col span={8}>
+            <Image src={i3} objectFit="contain" />
+          </Col>
+          <Col span={8}>
+            <Image src={i4} objectFit="contain" />
+          </Col>
+          <Col span={8}>
+            <Image src={i5} objectFit="contain" />
+          </Col>
+        </Row>
+      </div>
     </>
   );
 }
