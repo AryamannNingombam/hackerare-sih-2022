@@ -22,6 +22,7 @@ import { Card } from "antd";
 
 import { useQuery } from "react-query";
 import { GetAllProducts } from "services/product.services";
+import Script from "next/script";
 
 export default function Home() {
   const { data, isLoading } = useQuery("get-listed-products", GetAllProducts);
@@ -29,6 +30,9 @@ export default function Home() {
 
   return (
     <>
+      {/* <Script>
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+      </Script> */}
       <Navbar />
       <div className={styles.container}>
         <div className={styles.LeftSection}>
@@ -44,48 +48,49 @@ export default function Home() {
               navigation
               loop
             >
-              {data.products.map((item, idx) => {
-                return (
-                  <SwiperSlide
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    key={idx}
-                  >
-                    <Card
-                      hoverable
-                      className={styles.card}
-                      style={{ width: 400, height: 500 }}
-                      // cover={
-                      //   <Image
-                      //     src={item.images[0]}
-                      //     height={200}
-                      //     width={350}
-                      //     objectFit="cover"
-                      //     className={styles.img}
-                      //   />
-                      // }
+              {data &&
+                data.products.map((item, idx) => {
+                  return (
+                    <SwiperSlide
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                      key={idx}
                     >
-                      <div className={styles.cardContent}>
-                        <div>
-                          <h1>{item.name}</h1>
-                          <p>{item.description}</p>
+                      <Card
+                        hoverable
+                        className={styles.card}
+                        style={{ width: 400, height: 500 }}
+                        // cover={
+                        //   <Image
+                        //     src={item.images[0]}
+                        //     height={200}
+                        //     width={350}
+                        //     objectFit="cover"
+                        //     className={styles.img}
+                        //   />
+                        // }
+                      >
+                        <div className={styles.cardContent}>
+                          <div>
+                            <h1>{item.name}</h1>
+                            <p>{item.description}</p>
+                          </div>
+                          <div>
+                            <h3>Rs. {item.sellPrice}</h3>
+                          </div>
                         </div>
-                        <div>
-                          <h3>Rs. {item.sellPrice}</h3>
+                        <div className={styles.cardDesc}>
+                          Bidar is the centre for the manufacture of these
+                          unique metal handicrafts which developed during the
+                          14th cent...
                         </div>
-                      </div>
-                      <div className={styles.cardDesc}>
-                        Bidar is the centre for the manufacture of these unique
-                        metal handicrafts which developed during the 14th
-                        cent...
-                      </div>
-                    </Card>
-                  </SwiperSlide>
-                );
-              })}
+                      </Card>
+                    </SwiperSlide>
+                  );
+                })}
               {/* <SwiperSlide
                 style={{
                   display: "flex",
