@@ -90,3 +90,11 @@ export const RejectUserRequest = async (_id) => {
   );
   return response.data;
 };
+
+export const AddUserToSIH = async (body) => {
+  const token = GetJWTToken();
+  const response = await axios.post(`${BACKEND_URL}/sih/add-user`, body, {
+    headers: { token },
+  });
+  return response.data;
+};
