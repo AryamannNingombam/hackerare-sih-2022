@@ -9,7 +9,7 @@ export default function CardComponentSecondary({ name, image }) {
   return (
     <div>
       <Card className={styles.cardContainer}>
-        <Image src={image} />
+        <Image height={400} width={300} src={image} />
         <div className={styles.details}>
           {name}{" "}
           <CgArrowRight style={{ fontSize: "1.4rem", color: "#FF8A1B" }} />
