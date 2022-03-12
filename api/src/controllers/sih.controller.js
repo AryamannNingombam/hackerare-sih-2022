@@ -1,3 +1,4 @@
+const productModel = require("../models/product.model");
 const SIHModel = require("../models/sih.model");
 const userModel = require("../models/user.model");
 
@@ -46,11 +47,10 @@ exports.AddSIH = async (req, res, next) => {
 exports.GetSIHDetails = async (req, res, next) => {
   try {
     const { _id } = req.params;
+    console.log(req.params);
     const sih = await SIHModel.findById(_id);
-    return res.status(200).json({
-      success: true,
-      sih,
-    });
+    const products = await productModel.find({ sih: _id });
+    return res.status(200).json({ ...sih._doc, products });
   } catch (err) {
     console.log("ERROR");
     console.log(err);

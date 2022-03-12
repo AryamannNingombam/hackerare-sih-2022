@@ -14,8 +14,13 @@ import axios from "axios";
 //   }
 // }
 
-export const GetAll = async (body) => {
+export const GetAllSIH = async () => {
   const response = await axios.get(`${BACKEND_URL}/sih/get-all`);
+  return response.data;
+};
+
+export const GetSIHDetails = async (uid) => {
+  const response = await axios.get(`${BACKEND_URL}/sih/get-details/${uid}`);
   return response.data;
 };
 

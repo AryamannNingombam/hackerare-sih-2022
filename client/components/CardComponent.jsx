@@ -5,14 +5,14 @@ import cardpic from "./assets/cardpic.jpg";
 import Image from "next/image";
 import { CgArrowRight } from "react-icons/cg";
 
-
-export default function CardComponentSecondary() {
+export default function CardComponentSecondary({ name, image }) {
   return (
     <div>
       <Card className={styles.cardContainer}>
-        <Image src={cardpic} />
+        <Image src={image} />
         <div className={styles.details}>
-          Artisan Utensils <CgArrowRight style={{fontSize:"1.4rem",color:"#FF8A1B"}} />
+          {name}{" "}
+          <CgArrowRight style={{ fontSize: "1.4rem", color: "#FF8A1B" }} />
         </div>
       </Card>
     </div>
