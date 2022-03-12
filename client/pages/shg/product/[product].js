@@ -108,6 +108,7 @@ export default function Product({ product }) {
               <div className={styles.colOne}>
                 {productDetails &&
                   productDetails.images.map((item, idx) => {
+                    console.log(item);
                     return (
                       <CardComponent
                         key={idx}
