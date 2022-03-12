@@ -24,13 +24,16 @@ import bowl from "./assets/bowl.jpg";
 import { Button, Card } from "antd";
 
 import { useQuery } from "react-query";
+import { GetAll } from "services/sih.services";
 
 export default function Home() {
-  // const {data, isLoading} = useQuery("get-listed-products", , {
-  //   onSuccess(){
-  //     console.log("Nice")
-  //   }
-  // });
+  const { data, isLoading } = useQuery("get-listed-products", GetAll, {
+    onSuccess() {
+      console.log("Nice");
+    },
+  });
+
+  console.log("datta", data);
 
   return (
     <>
