@@ -18,6 +18,13 @@ import image4 from "./assets/image4.png";
 import image5 from "./assets/image5.png";
 import image6 from "./assets/image6.png";
 
+import i0 from "./assets/0.png";
+import i1 from "./assets/1.png";
+import i2 from "./assets/2.png";
+import i3 from "./assets/3.png";
+import i4 from "./assets/4.png";
+import i5 from "./assets/5.png";
+
 import { Card } from "antd";
 
 import { useQuery } from "react-query";
@@ -30,9 +37,7 @@ export default function Home() {
 
   return (
     <>
-      {/* <Script>
-        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-      </Script> */}
+      <Script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></Script>
       <Navbar />
       <div className={styles.container}>
         <div className={styles.LeftSection}>
@@ -245,6 +250,33 @@ export default function Home() {
           </SwiperSlide>
         </Swiper>
       </div>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `
+          <df-messenger
+            intent="WELCOME"
+            chat-title="Svayam Bot"
+            agent-id="39b60ba8-a091-47cb-880b-9e3ade88f6eb"
+            language-code="en"
+            chat-icon="https://i.ibb.co/Z2FtyBn/Frame-2.png"
+          ></df-messenger>
+          `,
+        }}
+      />
+
+      <div className={styles.AboutSHG}>
+        <div className={styles.LeftSection}>
+          <h1>Bringing back the Original Craftmenship</h1>
+        </div>
+        <div className={styles.RightSection}>
+          We at Svayam are committed in bringing back the original craftmenship
+          of each corner of the country. We believe that the traditional
+          craftmenship needs to be revived and brought back to the people of
+          India.
+        </div>
+      </div>
+
+      <div className={styles.ImageGrid}></div>
     </>
   );
 }
