@@ -3,7 +3,11 @@ import styles from "styles/Product.module.scss";
 import { Breadcrumb, Button, message, Skeleton } from "antd";
 import { AiOutlineShopping } from "react-icons/ai";
 import { useQuery } from "react-query";
-import { BuyProduct, GetProductDetails } from "services/product.services";
+import {
+  BuyProduct,
+  GetAllProductsBySIH,
+  GetProductDetails,
+} from "services/product.services";
 import CardComponent from "components/CardComponentSecond";
 import { CreateOrder } from "services/razorpay.service";
 import { useSelector } from "react-redux";
@@ -13,6 +17,9 @@ export default function Product({ product }) {
   const { isLoggedIn } = useSelector((state) => state.user);
   const { data: productDetails, isLoading } = useQuery("productdetails", () =>
     GetProductDetails(product)
+  );
+  const { data: shgProducts, isLoadingSHG } = useQuery("shgProducts", () =>
+    GetAllProductsBySIH(uid)
   );
   const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -148,31 +155,25 @@ export default function Product({ product }) {
                 <p>{productDetails.description}</p>
                 <h3>SHIPPING POLICY</h3>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                  tellus purus, laoreet at eros eget, ultricies consequat
-                  tellus. Curabitur nec sagittis nisl, eu porttitor massa. Ut
-                  posuere semper luctus. Aliquam nunc ex, ornare non mattis sed,
-                  scelerisque non nisl. Vivamus convallis bibendum urna eget
-                  consequat. Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit. Etiam tellus purus, laoreet at eros eget, ultricies
-                  consequat tellus. Curabitur nec sagittis nisl, eu porttitor
-                  massa. Ut posuere semper luctus. Aliquam nunc ex, ornare non
-                  mattis sed, scelerisque non nisl. Vivamus convallis bibendum
-                  urna eget consequat. Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Etiam tellus purus, laoreet at eros eget,
-                  ultricies consequat tellus. Curabitur nec sagittis nisl, eu
-                  porttitor massa. Ut posuere semper luctus. Aliquam nunc ex,
-                  ornare non mattis sed, scelerisque non nisl. Vivamus convallis
-                  bibendum urna eget consequat.{" "}
+                  Usually delivered in 7 days Enter pincode for exact delivery
+                  dates/charges Installation Details This product doesn't
+                  require installation Shipping Charges For Flipkart Assured
+                  Items Shipping charges are calculated based on the number of
+                  units, distance and delivery date. For Plus customers,
+                  shipping charges are free. For non-Plus customers, if the
+                  total value of FAssured items is more than Rs.500, shipping
+                  charges are free. If the total value of FAssured items is less
+                  than Rs.500, shipping charges = Rs.40 per unit * For faster
+                  delivery, shipping charges will be applicable.
                 </p>
               </div>
             </div>
           )}
         </Skeleton>
 
-        <h3 className={styles.exploreHeading}>EXPLORE MORE</h3>
-        <div className={styles.exploreSection}>
-          {/* <CardComponent />
+        {/* <h3 className={styles.exploreHeading}>EXPLORE MORE</h3>
+        <div className={styles.exploreSection}> */}
+        {/* <CardComponent />
           <CardComponent />
           <CardComponent />
           <CardComponent />
@@ -180,7 +181,16 @@ export default function Product({ product }) {
           <CardComponent />
           <CardComponent />
           <CardComponent /> */}
-        </div>
+        {/* {shgProducts && shgProducts.products.length === 0 ? (
+            <h2>No products available yet</h2>
+          ) : (
+            shgProducts?.products?.map((product) => {
+              return (
+                <CardComponent name={product.name} image={product.images[0]} />
+              );
+            })
+          )} */}
+        {/* </div> */}
       </div>
     </>
   );

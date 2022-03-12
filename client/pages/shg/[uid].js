@@ -9,8 +9,13 @@ import UserImage from "pages/assets/user.svg";
 import { GetAllProductsBySIH } from "services/product.services";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import ModalComponent from "components/ModalComponent";
+import { useState } from "react";
+import ningombam from "pages/assets/ningombam.jpg";
 
 export default function ViewSHG({ uid }) {
+  const router = useRouter();
+  const [show, setShow] = useState(false);
   const { user, isLoggedIn } = useSelector((state) => state.user);
   const { data: shg, isLoading: shgLoading } = useQuery("shg", () =>
     GetSIHDetails(uid)
@@ -19,10 +24,6 @@ export default function ViewSHG({ uid }) {
     GetAllProductsBySIH(uid)
   );
 
-  if (!isLoggedIn) {
-    message.error("Please login to request for joining this SHG");
-    router.push("/login");
-  }
   const checkUserType = () => {
     const uid = user?.user?._id;
     const member = shg?.members.find((memberid) => memberid === uid);
@@ -34,10 +35,14 @@ export default function ViewSHG({ uid }) {
     }
     return 1;
   };
-  const router = useRouter();
 
   console.log(shg);
   const OnRequestJoin = async (e) => {
+    if (!isLoggedIn) {
+      message.error("Please login to request for joining this SHG");
+      router.push("/login");
+      return;
+    }
     try {
       const response = await RequestSIH({
         sih: uid,
@@ -67,6 +72,10 @@ export default function ViewSHG({ uid }) {
     );
   }
 
+  const showModal = () => {
+    // setData(d);
+    setShow(true);
+  };
   return (
     <>
       <Navbar />
@@ -109,7 +118,10 @@ export default function ViewSHG({ uid }) {
               : "Join this SHG"}
           </Button>
           <div className={styles.stats}>
-            <h1>{shg?.members?.length}</h1>
+            <h1>
+              {/* <Button onClick={showModal}>{shg?.members?.length}</Button> */}
+              {shg?.members?.length}
+            </h1>
             <h2>{shg?.members?.length !== 1 ? "Members" : "Member"}</h2>
             <h1>{shg?.products?.length}</h1>
             <h2>{shg?.products?.length !== 1 ? "Products" : "Product"}</h2>
@@ -149,6 +161,17 @@ export default function ViewSHG({ uid }) {
             })
           )}
         </div>
+        <ModalComponent heading={"Member"} show={show} setShow={setShow}>
+          <div className={styles.modalContent}>
+            <div>
+              <Image src={ningombam} />
+            </div>
+            <div>
+              <h1>Aryamann</h1>
+              <h2>Owner</h2>
+            </div>
+          </div>
+        </ModalComponent>
       </div>
     </>
   );
