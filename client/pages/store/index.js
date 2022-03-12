@@ -8,7 +8,10 @@ import { GetAllSIH } from "services/sih.services";
 
 export default function Store() {
   const { data, isLoading } = useQuery("get-listed-products", GetAllProducts);
-  const { data:dataSIH, isLoading:isLoadingSIH} = useQuery("get-listed-shg", GetAllSIH);
+  const { data: dataSIH, isLoading: isLoadingSIH } = useQuery(
+    "get-listed-shg",
+    GetAllSIH
+  );
 
   return (
     <>
@@ -34,17 +37,17 @@ export default function Store() {
         <h2>Popular Self Help Groups</h2>
         <div className={styles.cardController}>
           {!isLoadingSIH &&
-              dataSIH.sihs.map((item, idx) => {
-                return (
-                  <CardComponentSecondary
-                    key={idx}
-                    name={item.name}
-                    // image={item.image}
-                    state={item.state}
-                    id={item._id}
-                  />
-                );
-              })}
+            dataSIH.sihs.map((item, idx) => {
+              return (
+                <CardComponentSecondary
+                  key={idx}
+                  name={item.name}
+                  image={item.images[0]}
+                  state={item.state}
+                  id={item._id}
+                />
+              );
+            })}
         </div>
       </div>
     </>

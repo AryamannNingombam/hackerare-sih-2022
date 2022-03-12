@@ -1,19 +1,19 @@
 import CardComponent from "components/CardComponent";
 import Navbar from "components/Navbar";
 import styles from "styles/ViewShg.module.scss";
-import { Breadcrumb, Button, message } from "antd";
-import ningombam from "pages/assets/ningombam.jpg";
+import { Breadcrumb, Button, message, Spin } from "antd";
 import { Image } from "antd";
-import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { GetSIHDetails, RequestSIH } from "services/sih.services";
 import UserImage from "pages/assets/user.svg";
 import { GetAllProductsBySIH } from "services/product.services";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 export default function ViewSHG({ uid }) {
-  console.log("UIS", uid);
+  const { user } = useSelector((state) => state.user);
   const { data: shg } = useQuery("shg", () => GetSIHDetails(uid));
-  const { data: shgProducts } = useQuery("shgProducts", () =>
+  const { data: shgProducts, isLoading } = useQuery("shgProducts", () =>
     GetAllProductsBySIH(uid)
   );
   console.log(shgProducts);
@@ -30,6 +30,22 @@ export default function ViewSHG({ uid }) {
       message.error("error sending request");
     }
   };
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Spin size="large" />
+      </div>
+    );
+  }
   return (
     <>
       <Navbar />
@@ -51,7 +67,9 @@ export default function ViewSHG({ uid }) {
           <h1>{shg?.name}</h1>
           <h2>{shg?.state}</h2>
           <Button onClick={OnRequestJoin} className={styles.shgJoinBtn}>
-            REQUEST TO JOIN
+            {shg?.owner === user?.user?._id
+              ? "You are a member"
+              : "Join this SHG"}
           </Button>
           <div className={styles.stats}>
             <h1>{shg?.members?.length}</h1>
@@ -64,11 +82,15 @@ export default function ViewSHG({ uid }) {
         </div>
         <h3 className={styles.exploreHeading}>PRODUCTS</h3>
         <div className={styles.exploreSection}>
-          {shgProducts?.products?.map((product) => {
-            return (
-              <CardComponent name={product.name} image={product.images[0]} />
-            );
-          })}
+          {!shgProducts.length ? (
+            <h2>No products available yet</h2>
+          ) : (
+            shgProducts?.products?.map((product) => {
+              return (
+                <CardComponent name={product.name} image={product.images[0]} />
+              );
+            })
+          )}
         </div>
       </div>
     </>
