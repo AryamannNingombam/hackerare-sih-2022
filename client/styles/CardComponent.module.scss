@@ -1,14 +1,15 @@
 .cardContainer {
   margin: 2rem 0;
-  width: 13rem;
+  width: 18rem;
   height: auto;
   .details {
     display: flex;
     flex-direction: row;
     font-family: Poppins;
     font-weight: 600;
-    justify-content: space-around;
-    padding: 0.8rem 0.5rem;
+    justify-content: space-between;
+    padding-top: 0.2rem;
+    font-size: 1.2rem;
   }
   .detailsTwo {
     display: flex;

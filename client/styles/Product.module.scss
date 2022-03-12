@@ -1,0 +1,62 @@
+.container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  .breadcrumb {
+    width: 80%;
+    margin: auto;
+    margin: 2rem auto;
+  }
+  .colController {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    .colOne {
+      width: 50%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .colTwo {
+      width: 45%;
+
+      .button {
+        background-color: #ff8a1b;
+        border: none;
+        height: auto;
+        padding: 0.8rem 7.2rem;
+      }
+      .buttonTwo {
+        background-color: #7a7a7a;
+        border: none;
+        height: auto;
+        padding: 0.8rem 0.8rem;
+        margin: 0 1rem;
+      }
+      h3 {
+        margin-top: 5rem;
+      }
+      p {
+        color: #8c8c8c;
+      }
+    }
+  }
+  .exploreHeading {
+    width: 80%;
+    margin: auto;
+    font-weight: 600;
+    margin-top: 5rem;
+  }
+  .exploreSection {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: auto;
+  }
+}

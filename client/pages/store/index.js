@@ -1,6 +1,6 @@
-import CardComponentSecondary from "../components/CardComponentSecond";
-import CardComponent from "../components/CardComponent";
-import Navbar from "../components/Navbar";
+import CardComponentSecondary from "../../components/CardComponentSecond";
+import CardComponent from "../../components/CardComponent";
+import Navbar from "../../components/Navbar";
 import styles from "../styles/Store.module.scss";
 
 export default function Store() {
