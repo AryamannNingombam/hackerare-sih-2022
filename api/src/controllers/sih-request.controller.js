@@ -53,7 +53,7 @@ exports.ApproveSIH = async (req, res, next) => {
 
 exports.RequestSIH = async (req, res, next) => {
   try {
-    const { sih } = req.params;
+    const { sih } = req.body;
     const SIHRequest = new SIHRequestModel({
       sih,
       user: res.locals.uid,

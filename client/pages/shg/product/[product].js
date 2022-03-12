@@ -62,11 +62,6 @@ export default function Product({ product }) {
         };
         // @TODO Payment success returns stuff
         console.log("HELLLLOOO");
-        const buyRequest = await DirectBuyListedProduct({
-          soldPrice: selectedItem.askPrice,
-          _id: selectedItem._id,
-        });
-        console.log(buyRequest);
       },
       prefill: {
         name: "Sitaraman",

@@ -5,9 +5,11 @@ import CardComponentSecondary from "components/CardComponentSecond";
 import { useQuery } from "react-query";
 import { GetAllSIH } from "services/sih.services";
 
-
 export default function index() {
-  const { data:dataSIH, isLoading:isLoadingSIH} = useQuery("get-listed-shg", GetAllSIH);
+  const { data: dataSIH, isLoading: isLoadingSIH } = useQuery(
+    "get-listed-shg",
+    GetAllSIH
+  );
 
   return (
     <>
@@ -21,7 +23,7 @@ export default function index() {
               <CardComponentSecondary
                 key={idx}
                 name={item.name}
-                // image={item.image}
+                image={item.images[0]}
                 state={item.state}
                 id={item._id}
               />
