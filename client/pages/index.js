@@ -65,7 +65,7 @@ export default function Home() {
                     <Card
                       hoverable
                       className={styles.card}
-                      style={{ width: 380, height: 500 }}
+                      style={{ width: 400, height: 500 }}
                       cover={
                         <Image
                           src={item.images[0]}
@@ -82,7 +82,7 @@ export default function Home() {
                           <p>{item.description}</p>
                         </div>
                         <div>
-                          <h1>Rs. {item.sellPrice}</h1>
+                          <h3>Rs. {item.sellPrice}</h3>
                         </div>
                       </div>
                       <div className={styles.cardDesc}>
