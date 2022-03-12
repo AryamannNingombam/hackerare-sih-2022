@@ -36,18 +36,17 @@ export default function Navbar() {
         <Link href="/shg">
           <a>Self Help Groups</a>
         </Link>
-        <Link href="/login">
-          <a>Welfare Schemes</a>
-        </Link>
         {isLoggedIn && (
           <>
             <Link href="/shg/create">
               <a>Become a seller</a>
             </Link>
-
-            <CgProfile style={{ fontSize: "1.2rem", margin: "0 1rem" }} />
           </>
         )}
+        <Link href="https://vikaspedia.in/social-welfare/rural-poverty-alleviation-1/schemes">
+          <a>Welfare Schemes</a>
+        </Link>
+
         {!isLoggedIn && (
           <>
             <Link href="/login">
@@ -66,16 +65,19 @@ export default function Navbar() {
         )}
 
         {isLoggedIn && (
-          <Button
-            danger
-            onClick={() => {
-              dispatch(logoutUser());
-              localStorage.clear();
-              router.push("/");
-            }}
-          >
-            Logout
-          </Button>
+          <>
+            {/* <Link href="/profile">Profile</Link> */}
+            <Button
+              danger
+              onClick={() => {
+                dispatch(logoutUser());
+                localStorage.clear();
+                router.push("/");
+              }}
+            >
+              Logout
+            </Button>
+          </>
         )}
       </div>
     </div>
