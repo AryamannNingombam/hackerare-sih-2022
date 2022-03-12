@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   //image
   images: {
-    domains: ["www.linkpicture.com", "upload.wikimedia.org"],
+    domains: ["www.linkpicture.com", "upload.wikimedia.org", "ipfs.infura.io"],
   },
 };
 

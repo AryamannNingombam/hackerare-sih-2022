@@ -28,7 +28,7 @@ export const BuyProduct = async (body) => {
 
 export const AddProduct = async (body) => {
   const token = GetJWTToken();
-  const response = await axios.put(`${BACKEND_URL}/product/add`, body, {
+  const response = await axios.post(`${BACKEND_URL}/product/add`, body, {
     headers: { token },
   });
   return response.data;

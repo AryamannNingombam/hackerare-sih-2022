@@ -12,8 +12,11 @@ export default function login() {
   const dispatch = useDispatch();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
   const router = useRouter();
   const onFormSubmit = async () => {
+    setLoading(true)
     try {
       const response = await SignIn({
         email,
@@ -30,7 +33,9 @@ export default function login() {
       console.log(err);
       message.error("error signing ");
     }
+    setLoading(false)
   };
+
   return (
     <>
       <Navbar />
@@ -91,6 +96,8 @@ export default function login() {
               type="primary"
               htmlType="submit"
               className={styles.loginButton}
+              loading={loading}
+              disabled={loading}
             >
               Log in
             </Button>

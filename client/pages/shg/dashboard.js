@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { GetAllProductsBySIH } from "services/product.services";
 import {
   AcceptUserRequest,
+  AddUserToSIH,
   GetAllSIHRequests,
   GetSIHDetails,
   GetUserSIH,
@@ -25,7 +26,19 @@ export default function SHGDashboard() {
   const [show, setShow] = useState(false);
   const [secondShow, setSecondShow] = useState(false);
   const [data, setData] = useState({});
-
+  const onEmailSubmittion = async ({ email }) => {
+    try {
+      const response = await AddUserToSIH({
+        email,
+      });
+      console.log(response);
+      message.success("user added");
+    } catch (err) {
+      console.log("ERROR");
+      console.log(err);
+      message.error("error adding user");
+    }
+  };
   const onRequestSubmittion = async (uid, type) => {
     try {
       if (type === "ACCEPT") {
@@ -140,13 +153,21 @@ export default function SHGDashboard() {
               setShow={setSecondShow}
               className={styles.addPeopleForm}
             >
-              <Form>
-                <Form.Item  >
+              <Form
+                name="register-form"
+                initialValues={{ remember: true }}
+                onFinish={onEmailSubmittion}
+              >
+                <Form.Item name="email">
                   <Input placeholder="Enter Email" />
                 </Form.Item>
-                <Form.Item >
-                    <Button className={styles.formItem} type="primary" >Send Invite</Button>
-                </Form.Item>
+                <Button
+                  className={styles.formItem}
+                  htmlType="submit"
+                  type="submit"
+                >
+                  Send Invite
+                </Button>
               </Form>
             </ModalComponent>
           </div>

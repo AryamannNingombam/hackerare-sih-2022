@@ -8,15 +8,14 @@ import {
   Input,
   Upload,
   Select,
-  Tag,
   message,
   Spin,
+  DatePicker,
 } from "antd";
 import { useRouter } from "next/router";
 import { UploadOnIPFS } from "services/ipfs.service";
 import { AddProduct } from "services/product.services";
 import { PlusOutlined } from "@ant-design/icons";
-import Image from "next/image";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -33,10 +32,26 @@ export default function addProduct() {
   // }
 
   const [fileList, setFileList] = useState([]);
+  const [loading,setLoading] = useState(false)
 
   const router = useRouter();
 
-  const onFormSubmit = async (values) => {};
+  const onFormSubmit = async (values) => {
+    setLoading(true)
+    console.log(values);
+    console.log(fileList);
+    values.images = fileList.map(async (image) => {
+      const imageUrl = await UploadOnIPFS(image.originFileObj);
+      return imageUrl;
+    });
+    const imageUrls = await Promise.all(values.images);
+    values.images = imageUrls;
+    await AddProduct(values).then((res) => {
+      message.success("Product added successfully");
+      router.push("/shg/products");
+    });
+    setLoading(false)
+  };
 
   const handleChange = ({ fileList }) => setFileList(fileList);
 
@@ -46,32 +61,10 @@ export default function addProduct() {
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
-  const options = [
-    { value: "gold" },
-    { value: "lime" },
-    { value: "green" },
-    { value: "cyan" },
-  ];
 
-  function tagRender(props) {
-    const { label, value, closable, onClose } = props;
-    const onPreventMouseDown = (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-    };
-    return (
-      <Tag
-        color={value}
-        onMouseDown={onPreventMouseDown}
-        closable={closable}
-        onClose={onClose}
-        style={{ marginRight: 3 }}
-      >
-        {label}
-      </Tag>
-    );
+  function handleTagChange(value) {
+    console.log(`selected ${value}`);
   }
-
   return (
     <>
       <Navbar />
@@ -126,7 +119,7 @@ export default function addProduct() {
                 <Input placeholder="Seller" />
               </Form.Item>
               <Form.Item
-                name="price"
+                name="sellPrice"
                 rules={[
                   {
                     required: true,
@@ -159,23 +152,35 @@ export default function addProduct() {
               >
                 <Input placeholder="Quantity" />
               </Form.Item>
+              <Form.Item
+                name="releaseDate"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your date of release!",
+                  },
+                ]}
+              >
+                <DatePicker placeholder="Date of release" />
+              </Form.Item>
 
-              <Form.Item>
+              <Form.Item className={styles.TagSelector} name="labels">
                 <Select
-                  mode="multiple"
-                  showArrow
-                  tagRender={tagRender}
-                  defaultValue={["gold", "cyan"]}
+                  mode="tags"
                   style={{ width: "100%" }}
-                  options={options}
+                  onChange={handleTagChange}
+                  tokenSeparators={[","]}
+                  placeholder="Add comma separated labels"
                 />
               </Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
                 className={styles.loginButton}
+                loading={loading}
+                disabled={loading}
               >
-                Add
+                Add this Product
               </Button>
             </Form>
           </Spin>
