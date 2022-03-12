@@ -1,11 +1,10 @@
-import { Input } from "antd";
-import { Image } from 'antd';
 import React from "react";
 import swayamLogo from "./assets/svayam-logo.svg";
 import styles from "../styles/Navbar.module.scss";
 import { CgProfile } from "react-icons/cg";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import Image from "next/image";
 export default function Navbar() {
   const { isLoggedIn } = useSelector((state) => state.user);
   return (

@@ -3,7 +3,7 @@ import Navbar from "components/Navbar";
 import styles from "styles/ViewShg.module.scss";
 import { Breadcrumb, Button } from "antd";
 import ningombam from "pages/assets/ningombam.jpg";
-import { Image } from 'antd';
+import { Image } from "antd";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { GetSIHDetails } from "services/sih.services";
@@ -13,7 +13,9 @@ import { GetAllProductsBySIH } from "services/product.services";
 export default function ViewSHG({ uid }) {
   console.log("UIS", uid);
   const { data: shg } = useQuery("shg", () => GetSIHDetails(uid));
-  const { data: shgProducts } = useQuery("shgProducts", () => GetAllProductsBySIH(uid));
+  const { data: shgProducts } = useQuery("shgProducts", () =>
+    GetAllProductsBySIH(uid)
+  );
   console.log(shgProducts);
 
   return (
@@ -32,7 +34,7 @@ export default function ViewSHG({ uid }) {
         </Breadcrumb>
         <div className={styles.colController}>
           <div className={styles.shgPic}>
-            <Image src={shg?.profileImage ? shg.profileImage : UserImage} />
+            <Image src={shg?.images ? shg.images[0] : UserImage} />
           </div>
           <h1>{shg?.name}</h1>
           <h2>{shg?.state}</h2>

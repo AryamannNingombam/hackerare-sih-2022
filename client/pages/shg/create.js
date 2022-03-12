@@ -1,7 +1,16 @@
 import Navbar from "components/Navbar";
 import React from "react";
 import styles from "styles/Login.module.scss";
-import { Button, Card, Form, Input, Upload, DatePicker, message } from "antd";
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  Upload,
+  DatePicker,
+  message,
+  Spin,
+} from "antd";
 import { useRouter } from "next/router";
 import { UploadOnIPFS } from "services/ipfs.service";
 import { AddSIH } from "services/sih.services";
@@ -20,6 +29,7 @@ function getBase64(file) {
 }
 
 export default function create() {
+  const [loading, setLoading] = React.useState(false);
   const [images, setImages] = React.useState([]);
   const [imageUrls, setImageUrls] = React.useState([]);
   const props = {
@@ -48,20 +58,20 @@ export default function create() {
     },
   };
   const router = useRouter();
+
   const onFormSubmit = async (values) => {
     try {
       values.dateFormed = new Date(values.dateFormed);
-      values.ipfsImages = [];
-      images.map(async (image, idx) => {
-        await UploadOnIPFS(image).then((url) => {
-          console.log("URL", url);
-          values.ipfsImages[idx] = url;
-        });
+      values.images = images.map(async (image) => {
+        const imageUrl = await UploadOnIPFS(image);
+        return imageUrl;
       });
-      const response = await AddSIH({
-        ...values,
-      });
+      const imageUrls = await Promise.all(values.images);
+      values.images = imageUrls;
+      const response = await AddSIH(values);
       console.log(response);
+      setLoading(false);
+      router.push("/shg");
       message.success("Successfully added Sih");
     } catch (err) {
       console.log(err);
@@ -75,103 +85,105 @@ export default function create() {
         <Card className={styles.formCard}>
           <h1>Create an SHG Account</h1>
 
-          <Form
-            name="login-form"
-            initialValues={{ remember: true }}
-            onFinish={onFormSubmit}
-          >
-            <Dragger {...props}>
-              <p className="ant-upload-drag-icon" style={{ margin: 12 }}>
-                <FileImageFilled style={{ color: "#1d1d1d", margin: 0 }} />
-              </p>
-              <p className="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-              <p className="ant-upload-hint">
-                Support for a single or bulk upload. Strictly prohibit from
-                uploading company data or other band files
-              </p>
-            </Dragger>
-            <div>
-              <h3>Preview</h3>
-              {console.log(imageUrls)}
-              {imageUrls.length > 0 &&
-                imageUrls.map((url) => (
-                  <Image
-                    src={url}
-                    width={200}
-                    height={200}
-                    objectFit="contain"
-                  />
-                ))}
-            </div>
-            <Form.Item
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
-                },
-              ]}
+          <Spin spinning={loading}>
+            <Form
+              name="login-form"
+              initialValues={{ remember: true }}
+              onFinish={onFormSubmit}
             >
-              <Input placeholder="Name of your Self Help Group" />
-            </Form.Item>
-            <Form.Item
-              name="description"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
-                },
-              ]}
-            >
-              <Input.TextArea
-                rows={5}
-                placeholder="Give a description of your Self Help Group"
-              />
-            </Form.Item>
-            <Form.Item
-              name="phoneNumber"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your phone number!",
-                },
-              ]}
-            >
-              <Input placeholder="Phone Number" />
-            </Form.Item>
-            <Form.Item
-              name="state"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your State!",
-                },
-              ]}
-            >
-              <Input placeholder="State" />
-            </Form.Item>
-            <Form.Item
-              name="dateFormed"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your date of formation!",
-                },
-              ]}
-            >
-              <DatePicker placeholder="Date of Formation" />
-            </Form.Item>
+              <Dragger {...props}>
+                <p className="ant-upload-drag-icon" style={{ margin: 12 }}>
+                  <FileImageFilled style={{ color: "#1d1d1d", margin: 0 }} />
+                </p>
+                <p className="ant-upload-text">
+                  Click or drag file to this area to upload
+                </p>
+                <p className="ant-upload-hint">
+                  Support for a single or bulk upload. Strictly prohibit from
+                  uploading company data or other band files
+                </p>
+              </Dragger>
+              <div>
+                <h3>Preview</h3>
+                {console.log(imageUrls)}
+                {imageUrls.length > 0 &&
+                  imageUrls.map((url) => (
+                    <Image
+                      src={url}
+                      width={200}
+                      height={200}
+                      objectFit="contain"
+                    />
+                  ))}
+              </div>
+              <Form.Item
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your email!",
+                  },
+                ]}
+              >
+                <Input placeholder="Name of your Self Help Group" />
+              </Form.Item>
+              <Form.Item
+                name="description"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your email!",
+                  },
+                ]}
+              >
+                <Input.TextArea
+                  rows={5}
+                  placeholder="Give a description of your Self Help Group"
+                />
+              </Form.Item>
+              <Form.Item
+                name="phoneNumber"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your phone number!",
+                  },
+                ]}
+              >
+                <Input placeholder="Phone Number" />
+              </Form.Item>
+              <Form.Item
+                name="state"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your State!",
+                  },
+                ]}
+              >
+                <Input placeholder="State" />
+              </Form.Item>
+              <Form.Item
+                name="dateFormed"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your date of formation!",
+                  },
+                ]}
+              >
+                <DatePicker placeholder="Date of Formation" />
+              </Form.Item>
 
-            <Button
-              type="primary"
-              htmlType="submit"
-              className={styles.loginButton}
-            >
-              Log in
-            </Button>
-          </Form>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className={styles.loginButton}
+              >
+                Log in
+              </Button>
+            </Form>
+          </Spin>
         </Card>
       </div>
     </>

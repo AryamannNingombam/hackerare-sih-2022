@@ -9,8 +9,8 @@ const SIHSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image: {
-    type: String,
+  images: {
+    type: [String],
     required: false,
   },
   owner: {

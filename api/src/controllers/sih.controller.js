@@ -21,6 +21,7 @@ exports.GetAllSIH = async (req, res, next) => {
 
 exports.AddSIH = async (req, res, next) => {
   try {
+    console.log("REQ BODY", req.body);
     const sih = new SIHModel({
       ...req.body,
       owner: res.locals.uid,
