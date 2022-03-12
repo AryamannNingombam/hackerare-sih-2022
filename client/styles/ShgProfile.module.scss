@@ -107,6 +107,23 @@
       color: #8c8c8c;
     }
   }
+  .addPeopleForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .formItem{
+      background: #ff8a1b;
+
+      :global{
+        .ant-btn-primary{
+
+          
+          background: #ff8a1b;
+          color: white;
+        }
+      }
+    }
+  }
 }
 
 .user{
