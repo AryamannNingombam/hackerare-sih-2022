@@ -61,3 +61,20 @@ exports.GetSIHDetails = async (req, res, next) => {
     });
   }
 };
+
+
+exports.GetUserSIH = async (req,res,next)=>{
+  try{
+    const user = await userModel.findOne({_id:res.locals.uid});
+    console.log(user.sih);
+    const sih = await SIHModel.findById(user.sih);
+    return res.status(200).json(sih)
+  }catch(err){
+    console.log("ERROR");
+    console.log(err);
+    return res.status(400).json({
+      success:false,
+      message: "UNKNOWN_ERROR",
+    });
+  }
+}
