@@ -1,4 +1,4 @@
-import { Breadcrumb, Button,Image, message } from "antd";
+import { Breadcrumb, Button, Image, message } from "antd";
 import Navbar from "components/Navbar";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
@@ -6,37 +6,41 @@ import styles from "styles/ShgProfile.module.scss";
 import UserImage from "pages/assets/user.svg";
 import { useSelector } from "react-redux";
 import { GetAllProductsBySIH } from "services/product.services";
-import { AcceptUserRequest, GetAllSIHRequests, GetSIHDetails, GetUserSIH, RejectUserRequest } from "services/sih.services";
+import {
+  AcceptUserRequest,
+  GetAllSIHRequests,
+  GetSIHDetails,
+  GetUserSIH,
+  RejectUserRequest,
+} from "services/sih.services";
 import ModalComponent from "components/ModalComponent";
-import ningombam from 'pages/assets/ningombam.jpg'
+import ningombam from "pages/assets/ningombam.jpg";
 export default function SHGDashboard() {
   const { data: shg } = useQuery("shg", GetUserSIH);
-  const {data:requests} = useQuery('requests',GetAllSIHRequests)
+  const { data: requests } = useQuery("requests", GetAllSIHRequests);
   console.log(shg);
   console.log(requests);
   const { isLoggedIn } = useSelector((state) => state.user);
   const [show, setShow] = useState(false);
   const [data, setData] = useState({});
 
- const onRequestSubmittion = async (uid,type)=>{
-    try{
-        if (type === "ACCEPT"){
-            const response = await AcceptUserRequest(uid);
-            console.log(response)
-            message.success('request approved')
-        }else{
-            const response = await RejectUserRequest(uid);
-            console.log(response)
-            message.success("request rejected")
-        }
-        
-
-    }catch(err){
-        console.log("ERROR");
-        console.log(err);
-        message.error('error accepting request')
+  const onRequestSubmittion = async (uid, type) => {
+    try {
+      if (type === "ACCEPT") {
+        const response = await AcceptUserRequest(uid);
+        console.log(response);
+        message.success("request approved");
+      } else {
+        const response = await RejectUserRequest(uid);
+        console.log(response);
+        message.success("request rejected");
+      }
+    } catch (err) {
+      console.log("ERROR");
+      console.log(err);
+      message.error("error accepting request");
     }
-  }
+  };
   const showModal = () => {
     // setData(d);
     setShow(true);
@@ -104,29 +108,36 @@ export default function SHGDashboard() {
               );
             })}
           </div> */}
-            <ModalComponent
-              heading={"Requests"}
-              show={show}
-              setShow={setShow}
-            >
-      {requests?.map(req=>(
-    <div className={styles.user}>
-     <div className={styles.left}>
-     <div className={styles.image}><img src={req.profileImage || ningombam}/></div>
-    <div><h3>{req.email}</h3><h6>{req.status}</h6></div>
-     </div>
-     <div className={styles.right}>
-         <Button onClick={()=>{
-             onRequestSubmittion(req._id,"ACCEPT");
-         }}>Accept</Button>
-         <Button onClick={()=>{
-             onRequestSubmittion(req._id,"REJECT");
-         }}>Reject</Button>
-     </div>
-
-</div>
-      ))}
-          
+            <ModalComponent heading={"Requests"} show={show} setShow={setShow}>
+              {requests?.map((req) => (
+                <div className={styles.user}>
+                  <div className={styles.left}>
+                    <div className={styles.image}>
+                      <img src={req.profileImage || ningombam} />
+                    </div>
+                    <div>
+                      <h3>{req.email}</h3>
+                      <h6>{req.status}</h6>
+                    </div>
+                  </div>
+                  <div className={styles.right}>
+                    <Button
+                      onClick={() => {
+                        onRequestSubmittion(req._id, "ACCEPT");
+                      }}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        onRequestSubmittion(req._id, "REJECT");
+                      }}
+                    >
+                      Reject
+                    </Button>
+                  </div>
+                </div>
+              ))}
             </ModalComponent>
           </div>
         </div>
