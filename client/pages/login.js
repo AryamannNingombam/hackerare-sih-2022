@@ -6,7 +6,7 @@ import { Button, Card, Form, Input, message } from "antd";
 import { useRouter } from "next/router";
 import { SignIn } from "services/auth.services";
 import { useDispatch } from "react-redux";
-import { loginUser } from "store/user.slice";
+import { loginUser } from "../store/user.slice";
 
 export default function login() {
   const dispatch = useDispatch();
@@ -19,9 +19,13 @@ export default function login() {
         email,
         password,
       });
-      router.push("/store");
-      dispatch(loginUser(response.data));
+      const userData = {
+        token: response.token,
+        user: response.userData,
+      };
+      dispatch(loginUser(userData));
       message.success("signed in!");
+      router.push("/store");
     } catch (err) {
       console.log(err);
       message.error("error signing ");
