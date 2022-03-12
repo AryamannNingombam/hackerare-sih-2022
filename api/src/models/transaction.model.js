@@ -14,25 +14,12 @@ const TransactionSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
-  attempts: {
-    type: Number,
-    required: true,
-  },
-  status: {
-    type: String,
-    required: true,
-  },
   currency: {
     type: String,
     required: true,
   },
-  amountDue: {
-    type: Number,
-    required: true,
-  },
-  amountPaid: {
-    type: Number,
-    required: true,
+  amount: {
+    type: String,
   },
   transactionId: {
     type: String,

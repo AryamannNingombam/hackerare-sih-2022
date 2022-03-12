@@ -1,9 +1,9 @@
 import Navbar from "components/Navbar";
 import styles from "styles/Product.module.scss";
-import { Breadcrumb, Button, Skeleton } from "antd";
+import { Breadcrumb, Button, message, Skeleton } from "antd";
 import { AiOutlineShopping } from "react-icons/ai";
 import { useQuery } from "react-query";
-import { GetProductDetails } from "services/product.services";
+import { BuyProduct, GetProductDetails } from "services/product.services";
 import CardComponent from "components/CardComponentSecond";
 import { CreateOrder } from "services/razorpay.service";
 
@@ -54,14 +54,24 @@ export default function Product({ product }) {
       image: "https://bugbase.in/static/media/BugBaseFullFinal.181dc571.svg",
       order_id: order_id,
       handler: async function (response) {
-        const data = {
-          orderCreationId: order_id,
-          razorpayPaymentId: response.razorpay_payment_id,
-          razorpayOrderId: response.razorpay_order_id,
-          razorpaySignature: response.razorpay_signature,
-        };
-        // @TODO Payment success returns stuff
-        console.log("HELLLLOOO");
+        try {
+          const data = {
+            transaction: {
+              currency: "INR",
+              amount: amount,
+              transactionId: response.razorpay_payment_id,
+            },
+            _id: product,
+          };
+          // @TODO Payment success returns stuff
+          const result = await BuyProduct(data);
+          console.log(result);
+          message.success("transaction successful");
+        } catch (err) {
+          console.log("ERROR");
+          console.log(err);
+          message.error("error with transaction");
+        }
       },
       prefill: {
         name: "Sitaraman",

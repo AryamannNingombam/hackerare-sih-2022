@@ -60,6 +60,7 @@ export default function create() {
   const router = useRouter();
 
   const onFormSubmit = async (values) => {
+    setLoading(true);
     try {
       values.dateFormed = new Date(values.dateFormed);
       values.images = images.map(async (image) => {
@@ -179,8 +180,9 @@ export default function create() {
                 type="primary"
                 htmlType="submit"
                 className={styles.loginButton}
+                disabled={loading}
               >
-                Log in
+                Create Your SHG
               </Button>
             </Form>
           </Spin>
