@@ -2,9 +2,28 @@ import Navbar from "components/Navbar";
 import React from "react";
 import styles from "../styles/Login.module.scss";
 import Link from "next/link";
-import { Button, Card, Form, Input } from "antd";
+import { Button, Card, Form, Input, message } from "antd";
+import { useRouter } from "next/router";
+import { SignIn } from "services/auth.services";
 
 export default function login() {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const router = useRouter();
+  const onFormSubmit = async () => {
+    try {
+      const response = await SignIn({
+        email,
+        password,
+      });
+      console.log(response);
+      router.push("/store");
+      message.success("signed in!");
+    } catch (err) {
+      console.log(err);
+      message.error("error signing ");
+    }
+  };
   return (
     <>
       <Navbar />
@@ -34,7 +53,13 @@ export default function login() {
                 },
               ]}
             >
-              <Input placeholder="Email" />
+              <Input
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setEmail(e.target.value);
+                }}
+                placeholder="Email"
+              />
             </Form.Item>
             <Form.Item
               name="password"
@@ -45,9 +70,17 @@ export default function login() {
                 },
               ]}
             >
-              <Input type="password" placeholder="Password" />
+              <Input
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setPassword(e.target.value);
+                }}
+                type="password"
+                placeholder="Password"
+              />
             </Form.Item>
             <Button
+              onClick={onFormSubmit}
               type="primary"
               htmlType="submit"
               className={styles.loginButton}

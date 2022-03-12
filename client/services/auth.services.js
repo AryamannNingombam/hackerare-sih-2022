@@ -1,21 +1,11 @@
-import axios from "../utils/axios";
+import { BACKEND_URL } from "utils/constants";
+import axios from "axios";
+export const SignIn = async (body) => {
+  const response = await axios.post(`${BACKEND_URL}/auth/sign-in`, body);
+  return response.data;
+};
 
-class AuthService {
-  SignIn(email, password) {
-    return axios.post(`/sign-in`, {
-      email,
-      password,
-    });
-  }
-
-  SignUp(email, password) {
-    return axios.post(`/sign-up`, {
-      email,
-      password,
-    });
-  }
-}
-
-const authService = new AuthService();
-
-export default authService;
+export const SignUp = async (body) => {
+  const response = await axios.post(`${BACKEND_URL}/auth/sign-up`, body);
+  return response.data;
+};

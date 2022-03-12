@@ -27,15 +27,9 @@ exports.SignIn = async (req, res, next) => {
     }
 
     const userData = await user.GetUserData();
-    const token = jwt.sign(
-      {
-        userData,
-      },
-      jwtHash,
-      {
-        expiresIn: "10h",
-      }
-    );
+    const token = jwt.sign(userData, jwtHash, {
+      expiresIn: "10h",
+    });
     return res.status(200).json({
       success: true,
       token,

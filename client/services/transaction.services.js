@@ -1,4 +1,4 @@
-import axios from "../utils/axios";
+import axios from "axios";
 
 class TransactionService {
   async GetAll() {

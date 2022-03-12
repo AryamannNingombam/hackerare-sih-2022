@@ -84,7 +84,7 @@ exports.AddProduct = async (req, res, next) => {
       });
     const product = new ProductModel({
       name,
-      public,
+      public: true,
       seller: res.locals.uid,
       sih: userData.sih,
       description,

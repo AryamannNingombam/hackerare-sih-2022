@@ -1,4 +1,4 @@
-import axios from "../utils/axios";
+import axios from "utils/axios";
 
 class UserService {
   async GetUser() {
