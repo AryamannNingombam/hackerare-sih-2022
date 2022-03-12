@@ -50,3 +50,11 @@ export const RequestSIH = async (body) => {
 };
 
 // const sihService = new SIHService();
+
+export const GetUserSIH = async ()=>{
+  const token = GetJWTToken();
+  const response = await axios.get(`${BACKEND_URL}/sih/get-user-sih`,{
+    headers:{token}
+  })
+  return response.data;
+}
