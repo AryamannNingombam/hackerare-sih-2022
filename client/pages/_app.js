@@ -3,6 +3,11 @@ import React, { useState } from "react";
 import "../styles/globals.scss";
 import "antd/dist/antd.css";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+import store from "../store/index";
+const persistor = persistStore(store);
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = useState(
@@ -21,9 +26,13 @@ function MyApp({ Component, pageProps }) {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Component {...pageProps} />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <QueryClientProvider client={queryClient}>
+          <Component {...pageProps} />
+        </QueryClientProvider>
+      </PersistGate>
+    </Provider>
   );
 }
 

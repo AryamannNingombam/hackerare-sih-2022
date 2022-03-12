@@ -5,8 +5,11 @@ import Link from "next/link";
 import { Button, Card, Form, Input, message } from "antd";
 import { useRouter } from "next/router";
 import { SignIn } from "services/auth.services";
+import { useDispatch } from "react-redux";
+import { loginUser } from "store/user.slice";
 
 export default function login() {
+  const dispatch = useDispatch();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const router = useRouter();
@@ -16,8 +19,8 @@ export default function login() {
         email,
         password,
       });
-      console.log(response);
       router.push("/store");
+      dispatch(loginUser(response.data));
       message.success("signed in!");
     } catch (err) {
       console.log(err);
