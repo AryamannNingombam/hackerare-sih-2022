@@ -1,4 +1,4 @@
-import { BACKEND_URL } from "utils/constants";
+import { BACKEND_URL, GetJWTToken } from "utils/constants";
 import axios from "axios";
 // class SIHService {
 //   GetAllSIH() {
@@ -26,6 +26,20 @@ export const GetSIHDetails = async (uid) => {
 
 export const AddSIH = async (body) => {
   const response = await axios.post(`${BACKEND_URL}/sih/make`, body);
+  return response.data;
+};
+
+export const RequestSIH = async (body) => {
+  const token = GetJWTToken();
+  const response = await axios.post(
+    `${BACKEND_URL}/sih-request/request`,
+    body,
+    {
+      headers: {
+        token,
+      },
+    }
+  );
   return response.data;
 };
 
