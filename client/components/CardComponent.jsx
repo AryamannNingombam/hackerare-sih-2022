@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 export default function CardComponentSecondary({
   name,
   image,
-  descrption,
+  description,
   id,
 }) {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function CardComponentSecondary({
         {name}
         <CgArrowRight style={{ fontSize: "1.4rem", color: "#FF8A1B" }} />
       </div>
-      <p>{descrption}</p>
+      <p>{description}</p>
     </Card>
   );
 }

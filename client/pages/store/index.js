@@ -1,12 +1,14 @@
-import CardComponentSecondary from "../../components/CardComponentSecond";
+import CardComponentSecondary from "components/CardComponentSecond";
 import CardComponent from "../../components/CardComponent";
 import Navbar from "../../components/Navbar";
 import styles from "styles/Store.module.scss";
 import { useQuery } from "react-query";
 import { GetAllProducts } from "services/product.services";
+import { GetAllSIH } from "services/sih.services";
 
 export default function Store() {
   const { data, isLoading } = useQuery("get-listed-products", GetAllProducts);
+  const { data:dataSIH, isLoading:isLoadingSIH} = useQuery("get-listed-shg", GetAllSIH);
 
   return (
     <>
@@ -31,14 +33,18 @@ export default function Store() {
         </div>
         <h2>Popular Self Help Groups</h2>
         <div className={styles.cardController}>
-          <CardComponentSecondary />
-          <CardComponentSecondary />
-          <CardComponentSecondary />
-          <CardComponentSecondary />
-          <CardComponentSecondary />
-          <CardComponentSecondary />
-          <CardComponentSecondary />
-          <CardComponentSecondary />
+          {!isLoadingSIH &&
+              dataSIH.sihs.map((item, idx) => {
+                return (
+                  <CardComponentSecondary
+                    key={idx}
+                    name={item.name}
+                    // image={item.image}
+                    state={item.state}
+                    id={item._id}
+                  />
+                );
+              })}
         </div>
       </div>
     </>

@@ -29,7 +29,7 @@ export default function Navbar() {
         <Link href="/store">
           <a>Explore Store</a>
         </Link>
-        <Link href="/login">
+        <Link href="/shg">
           <a>Self Help Groups</a>
         </Link>
         <Link href="/login">
