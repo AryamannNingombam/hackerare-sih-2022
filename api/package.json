@@ -19,6 +19,7 @@
     "mongoose": "^6.2.3",
     "nodemon": "^2.0.15",
     "randomstring": "^1.2.2",
-    "razorpay": "^2.8.1"
+    "razorpay": "^2.8.1",
+    "string-cosine-similarity": "^2.0.1"
   }
 }

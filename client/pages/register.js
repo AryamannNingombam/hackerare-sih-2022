@@ -27,11 +27,9 @@ export default function register() {
               try {
                 const response = await SignUp(e);
                 console.log(response);
-                message.success("signed up!");
-                router.push("/dashboard");
+                message.success("Sign up successful. Please proceed to login");
+                router.push("/login");
               } catch (err) {
-                console.log("ERROR");
-                console.log(err);
                 message.error("error signing up");
               }
             }}

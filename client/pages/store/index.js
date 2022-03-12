@@ -1,6 +1,6 @@
 import CardComponentSecondary from "components/CardComponentSecond";
-import CardComponent from "../../components/CardComponent";
-import Navbar from "../../components/Navbar";
+import CardComponent from "components/CardComponent";
+import Navbar from "components/Navbar";
 import styles from "styles/Store.module.scss";
 import { useQuery } from "react-query";
 import { GetAllProducts } from "services/product.services";
@@ -27,7 +27,7 @@ export default function Store() {
                   key={idx}
                   name={item.name}
                   image={item.images[0]}
-                  descrption={item.description}
+                  description={item.description}
                   price={item.sellPrice}
                   id={item._id}
                 />
@@ -45,6 +45,7 @@ export default function Store() {
                   image={item.images[0]}
                   state={item.state}
                   id={item._id}
+                  description={item.description}
                 />
               );
             })}

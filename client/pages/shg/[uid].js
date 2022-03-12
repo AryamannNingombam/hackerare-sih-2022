@@ -11,18 +11,46 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 export default function ViewSHG({ uid }) {
-  const { user } = useSelector((state) => state.user);
-  const { data: shg } = useQuery("shg", () => GetSIHDetails(uid));
+  const { user, isLoggedIn } = useSelector((state) => state.user);
+  const { data: shg, isLoading: shgLoading } = useQuery("shg", () =>
+    GetSIHDetails(uid)
+  );
   const { data: shgProducts, isLoading } = useQuery("shgProducts", () =>
     GetAllProductsBySIH(uid)
   );
-  console.log(shgProducts);
+
+  const checkUserType = () => {
+    // 0 owner
+    // 1 member
+    // -1 not a member
+    if (!isLoggedIn) {
+      message.error("Please login to view this page");
+      router.push("/login");
+    }
+    const uid = user?.user?._id;
+    const member = shg.members.find((memberid) => memberid === uid);
+    if (!member) {
+      return -1;
+    }
+    if (uid === shg?.owner) {
+      return 0;
+    }
+    return 1;
+  };
+  const router = useRouter();
+
+  console.log(shg);
   const OnRequestJoin = async (e) => {
+    if (!isLoggedIn) {
+      message.error("Please login to request for joining this SHG");
+      router.push("/login");
+      return;
+    }
     try {
       const response = await RequestSIH({
         sih: uid,
       });
-      console.log(response.data);
+      console.log(response);
       message.success("Request sent successfully");
     } catch (err) {
       console.log("ERROR");
@@ -31,7 +59,7 @@ export default function ViewSHG({ uid }) {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || shgLoading) {
     return (
       <div
         style={{
@@ -66,8 +94,24 @@ export default function ViewSHG({ uid }) {
           </div>
           <h1>{shg?.name}</h1>
           <h2>{shg?.state}</h2>
-          <Button onClick={OnRequestJoin} className={styles.shgJoinBtn}>
-            {shg?.owner === user?.user?._id
+          <Button
+            onClick={() => {
+              switch (checkUserType()) {
+                case 0:
+                  message.success("You are the owner of this SHG");
+                  break;
+                case 1:
+                  message.success("You are a member of this SHG");
+                  break;
+                case -1:
+                  OnRequestJoin();
+              }
+            }}
+            className={styles.shgJoinBtn}
+          >
+            {checkUserType() === 0
+              ? "You are the owner"
+              : checkUserType() === 1
               ? "You are a member"
               : "Join this SHG"}
           </Button>
@@ -82,7 +126,8 @@ export default function ViewSHG({ uid }) {
         </div>
         <h3 className={styles.exploreHeading}>PRODUCTS</h3>
         <div className={styles.exploreSection}>
-          {!shgProducts.length ? (
+          {console.log(shgProducts)}
+          {shgProducts && shgProducts.products.length === 0 ? (
             <h2>No products available yet</h2>
           ) : (
             shgProducts?.products?.map((product) => {

@@ -5,13 +5,23 @@ import { CgProfile } from "react-icons/cg";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import Image from "next/image";
+import { Button } from "antd";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "store/user.slice";
+import { useRouter } from "next/router";
+
 export default function Navbar() {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.user);
+
   return (
     <div className={styles.navContainer}>
       <div className={styles.navController}>
         <div className={styles.logo}>
-          <Image src={swayamLogo} />
+          <Link href="/">
+            <Image src={swayamLogo} />
+          </Link>
         </div>
         {/* <Input.Search
           size="large"
@@ -20,11 +30,6 @@ export default function Navbar() {
         /> */}
       </div>
       <div className={styles.navController}>
-        {!isLoggedIn && (
-          <Link href="/login">
-            <a>Login</a>
-          </Link>
-        )}
         <Link href="/store">
           <a>Explore Store</a>
         </Link>
@@ -40,8 +45,37 @@ export default function Navbar() {
               <a>Become a seller</a>
             </Link>
 
-            <CgProfile style={{ fontSize: "1.2rem" }} />
+            <CgProfile style={{ fontSize: "1.2rem", margin: "0 1rem" }} />
           </>
+        )}
+        {!isLoggedIn && (
+          <>
+            <Link href="/login">
+              <Button>Login</Button>
+            </Link>
+            <Link href="/register">
+              <Button
+                style={{
+                  marginLeft: "1rem",
+                }}
+              >
+                Register
+              </Button>
+            </Link>
+          </>
+        )}
+
+        {isLoggedIn && (
+          <Button
+            danger
+            onClick={() => {
+              dispatch(logoutUser());
+              localStorage.clear();
+              router.push("/");
+            }}
+          >
+            Logout
+          </Button>
         )}
       </div>
     </div>

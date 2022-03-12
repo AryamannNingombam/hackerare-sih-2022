@@ -53,6 +53,7 @@ UserSchema.methods.GetUserData = async function () {
     firstName: user.firstName,
     lastName: user.lastName,
     seller: user.seller,
+    sih: user.sih,
   };
 };
 

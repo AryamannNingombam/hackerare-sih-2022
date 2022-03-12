@@ -17,14 +17,19 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 import image4 from "./assets/image4.png";
 import image5 from "./assets/image5.png";
 import image6 from "./assets/image6.png";
-import basket from "./assets/basket.jpeg";
-import handi from "./assets/handi.jpeg";
-import bowl from "./assets/bowl.jpg";
+
+import i0 from "./assets/0.png";
+import i1 from "./assets/1.png";
+import i2 from "./assets/2.png";
+import i3 from "./assets/3.png";
+import i4 from "./assets/4.png";
+import i5 from "./assets/5.png";
 
 import { Card } from "antd";
 
 import { useQuery } from "react-query";
 import { GetAllProducts } from "services/product.services";
+import Script from "next/script";
 
 export default function Home() {
   const { data, isLoading } = useQuery("get-listed-products", GetAllProducts);
@@ -32,6 +37,7 @@ export default function Home() {
 
   return (
     <>
+      <Script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></Script>
       <Navbar />
       <div className={styles.container}>
         <div className={styles.LeftSection}>
@@ -47,48 +53,49 @@ export default function Home() {
               navigation
               loop
             >
-              {data.products.map((item, idx) => {
-                return (
-                  <SwiperSlide
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    key={idx}
-                  >
-                    <Card
-                      hoverable
-                      className={styles.card}
-                      style={{ width: 400, height: 500 }}
-                      // cover={
-                      //   <Image
-                      //     src={item.images[0]}
-                      //     height={200}
-                      //     width={350}
-                      //     objectFit="cover"
-                      //     className={styles.img}
-                      //   />
-                      // }
+              {data &&
+                data.products.map((item, idx) => {
+                  return (
+                    <SwiperSlide
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                      key={idx}
                     >
-                      <div className={styles.cardContent}>
-                        <div>
-                          <h1>{item.name}</h1>
-                          <p>{item.description}</p>
+                      <Card
+                        hoverable
+                        className={styles.card}
+                        style={{ width: 400, height: 500 }}
+                        cover={
+                          <Image
+                            src={item.images[0]}
+                            height={200}
+                            width={350}
+                            objectFit="cover"
+                            className={styles.img}
+                          />
+                        }
+                      >
+                        <div className={styles.cardContent}>
+                          <div>
+                            <h1>{item.name}</h1>
+                            <p>{item.description}</p>
+                          </div>
+                          <div>
+                            <h3>Rs. {item.sellPrice}</h3>
+                          </div>
                         </div>
-                        <div>
-                          <h3>Rs. {item.sellPrice}</h3>
+                        <div className={styles.cardDesc}>
+                          Bidar is the centre for the manufacture of these
+                          unique metal handicrafts which developed during the
+                          14th cent...
                         </div>
-                      </div>
-                      <div className={styles.cardDesc}>
-                        Bidar is the centre for the manufacture of these unique
-                        metal handicrafts which developed during the 14th
-                        cent...
-                      </div>
-                    </Card>
-                  </SwiperSlide>
-                );
-              })}
+                      </Card>
+                    </SwiperSlide>
+                  );
+                })}
               {/* <SwiperSlide
                 style={{
                   display: "flex",
@@ -243,6 +250,33 @@ export default function Home() {
           </SwiperSlide>
         </Swiper>
       </div>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `
+          <df-messenger
+            intent="WELCOME"
+            chat-title="Svayam Bot"
+            agent-id="39b60ba8-a091-47cb-880b-9e3ade88f6eb"
+            language-code="en"
+            chat-icon="https://i.ibb.co/Z2FtyBn/Frame-2.png"
+          ></df-messenger>
+          `,
+        }}
+      />
+
+      <div className={styles.AboutSHG}>
+        <div className={styles.LeftSection}>
+          <h1>Bringing back the Original Craftmenship</h1>
+        </div>
+        <div className={styles.RightSection}>
+          We at Svayam are committed in bringing back the original craftmenship
+          of each corner of the country. We believe that the traditional
+          craftmenship needs to be revived and brought back to the people of
+          India.
+        </div>
+      </div>
+
+      <div className={styles.ImageGrid}></div>
     </>
   );
 }

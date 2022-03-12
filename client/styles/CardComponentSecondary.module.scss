@@ -1,5 +1,6 @@
 .cardContainer {
   margin: 2rem auto;
+  padding: 1rem;
   width: 18rem;
   height: auto;
   display: flex;
@@ -15,20 +16,18 @@
     img {
       border-radius: 50%;
     }
-    
   }
-  h2{
+  h2 {
     padding-top: 2rem;
     margin: auto;
     text-align: center;
-    &:hover{
+    &:hover {
       text-decoration: underline;
-      text-decoration-color: #FF8A1B;
+      text-decoration-color: #ff8a1b;
     }
   }
-  h3{
-    color: #8C8C8C;
+  h3 {
+    color: #8c8c8c;
     margin: auto;
-
   }
 }
