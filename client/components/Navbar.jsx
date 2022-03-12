@@ -41,9 +41,7 @@ export default function Navbar() {
               <a>Become a seller</a>
             </Link>
 
-            <Link href="/profile">
-              <CgProfile style={{ fontSize: "1.2rem" }} />
-            </Link>
+            <CgProfile style={{ fontSize: "1.2rem" }} />
           </>
         )}
       </div>

@@ -26,10 +26,16 @@
         margin-left: 0.2rem;
       }
     }
-
     :global {
       .ant-form {
         margin-top: 2rem;
+      }
+      .ant-picker-suffix {
+        margin-bottom: 0;
+      }
+
+      .anticon-calendar {
+        margin-bottom: 0;
       }
       .ant-input {
         margin-bottom: 0;
