@@ -26,4 +26,12 @@ export const BuyProduct = async (body) => {
   return response.data;
 };
 
+export const AddProduct = async (body) => {
+  const token = GetJWTToken();
+  const response = await axios.put(`${BACKEND_URL}/product/add`, body, {
+    headers: { token },
+  });
+  return response.data;
+};
+
 // const sihService = new SIHService();

@@ -17,9 +17,6 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 import image4 from "./assets/image4.png";
 import image5 from "./assets/image5.png";
 import image6 from "./assets/image6.png";
-import basket from "./assets/basket.jpeg";
-import handi from "./assets/handi.jpeg";
-import bowl from "./assets/bowl.jpg";
 
 import { Card } from "antd";
 
