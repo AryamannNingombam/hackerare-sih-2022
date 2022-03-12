@@ -21,20 +21,14 @@ import basket from "./assets/basket.jpeg";
 import handi from "./assets/handi.jpeg";
 import bowl from "./assets/bowl.jpg";
 
-import { Button, Card } from "antd";
+import { Card } from "antd";
 
 import { useQuery } from "react-query";
-import { GetAll } from "services/sih.services";
 import { GetAllProducts } from "services/product.services";
 
 export default function Home() {
-  const { data, isLoading } = useQuery("get-listed-products", GetAllProducts, {
-    onSuccess() {
-      console.log("Nice");
-    },
-  });
+  const { data, isLoading } = useQuery("get-listed-products", GetAllProducts);
 
-  console.log(data);
   return (
     <>
       <Navbar />

@@ -36,13 +36,16 @@ export default function Navbar() {
           <a>Welfare Schemes</a>
         </Link>
         {isLoggedIn && (
-          <Link href="/shg/create">
-            <a>Become a seller</a>
-          </Link>
+          <>
+            <Link href="/shg/create">
+              <a>Become a seller</a>
+            </Link>
+
+            <Link href="/profile">
+              <CgProfile style={{ fontSize: "1.2rem" }} />
+            </Link>
+          </>
         )}
-        <Link href="/shg/create">
-          <CgProfile style={{ fontSize: "1.2rem" }} />
-        </Link>
       </div>
     </div>
   );

@@ -1,15 +1,16 @@
-import CardComponent from "components/CardComponent";
 import Navbar from "components/Navbar";
 import styles from "styles/Product.module.scss";
-import { Breadcrumb, Button } from "antd";
+import { Breadcrumb, Button, Skeleton } from "antd";
 import { AiOutlineShopping } from "react-icons/ai";
 import { useQuery } from "react-query";
 import { GetProductDetails } from "services/product.services";
+import CardComponent from "components/CardComponentSecond";
 
-export default function Product({product}) {
-    console.log(product)
-    const {data:productDetails} = useQuery('productdetails',()=>GetProductDetails(product))
-    console.log(productDetails)
+export default function Product({ product }) {
+  const { data: productDetails, isLoading } = useQuery("productdetails", () =>
+    GetProductDetails(product)
+  );
+  console.log(productDetails);
   return (
     <>
       <Navbar />
@@ -24,50 +25,59 @@ export default function Product({product}) {
           </Breadcrumb.Item>
           <Breadcrumb.Item>An Application</Breadcrumb.Item>
         </Breadcrumb>
-        <div className={styles.colController}>
-          <div className={styles.colOne}>
-            {/* <CardComponent />
-            <CardComponent />
-            <CardComponent />
-            <CardComponent /> */}
-          </div>
-          <div className={styles.colTwo}>
-            <h1>Hand Crafted Utensils</h1>
-            <h2>₹ 1000</h2>
-            <Button type="primary" className={styles.button}>
-              Buy Now
-            </Button>
-            <Button type="primary" className={styles.buttonTwo}>
-              <AiOutlineShopping style={{ fontSize: "1rem" }} />
-            </Button>
-            <h3>DESCRIPTION</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-              tellus purus, laoreet at eros eget, ultricies consequat tellus.
-              Curabitur nec sagittis nisl, eu porttitor massa. Ut posuere semper
-              luctus. Aliquam nunc ex, ornare non mattis sed, scelerisque non
-              nisl. Vivamus convallis bibendum urna eget consequat.{" "}
-            </p>
-            <h3>SHIPPING POLICY</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-              tellus purus, laoreet at eros eget, ultricies consequat tellus.
-              Curabitur nec sagittis nisl, eu porttitor massa. Ut posuere semper
-              luctus. Aliquam nunc ex, ornare non mattis sed, scelerisque non
-              nisl. Vivamus convallis bibendum urna eget consequat. Lorem ipsum
-              dolor sit amet, consectetur adipiscing elit. Etiam tellus purus,
-              laoreet at eros eget, ultricies consequat tellus. Curabitur nec
-              sagittis nisl, eu porttitor massa. Ut posuere semper luctus.
-              Aliquam nunc ex, ornare non mattis sed, scelerisque non nisl.
-              Vivamus convallis bibendum urna eget consequat. Lorem ipsum dolor
-              sit amet, consectetur adipiscing elit. Etiam tellus purus, laoreet
-              at eros eget, ultricies consequat tellus. Curabitur nec sagittis
-              nisl, eu porttitor massa. Ut posuere semper luctus. Aliquam nunc
-              ex, ornare non mattis sed, scelerisque non nisl. Vivamus convallis
-              bibendum urna eget consequat.{" "}
-            </p>
-          </div>
-        </div>
+        <Skeleton loading={isLoading && !productDetails}>
+          {productDetails && (
+            <div className={styles.colController}>
+              <div className={styles.colOne}>
+                {productDetails &&
+                  productDetails.images.map((item, idx) => {
+                    return (
+                      <CardComponent
+                        key={idx}
+                        name={productDetails.name}
+                        image={item}
+                        descrption={productDetails.description}
+                        price={productDetails.sellPrice}
+                        id={productDetails._id}
+                      />
+                    );
+                  })}
+              </div>
+              <div className={styles.colTwo}>
+                <h1>{productDetails.name}</h1>
+                <h2>₹ {productDetails.sellPrice}</h2>
+                <Button type="primary" className={styles.button}>
+                  Buy Now
+                </Button>
+                <Button type="primary" className={styles.buttonTwo}>
+                  <AiOutlineShopping style={{ fontSize: "1rem" }} />
+                </Button>
+                <h3>DESCRIPTION</h3>
+                <p>{productDetails.description}</p>
+                <h3>SHIPPING POLICY</h3>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                  tellus purus, laoreet at eros eget, ultricies consequat
+                  tellus. Curabitur nec sagittis nisl, eu porttitor massa. Ut
+                  posuere semper luctus. Aliquam nunc ex, ornare non mattis sed,
+                  scelerisque non nisl. Vivamus convallis bibendum urna eget
+                  consequat. Lorem ipsum dolor sit amet, consectetur adipiscing
+                  elit. Etiam tellus purus, laoreet at eros eget, ultricies
+                  consequat tellus. Curabitur nec sagittis nisl, eu porttitor
+                  massa. Ut posuere semper luctus. Aliquam nunc ex, ornare non
+                  mattis sed, scelerisque non nisl. Vivamus convallis bibendum
+                  urna eget consequat. Lorem ipsum dolor sit amet, consectetur
+                  adipiscing elit. Etiam tellus purus, laoreet at eros eget,
+                  ultricies consequat tellus. Curabitur nec sagittis nisl, eu
+                  porttitor massa. Ut posuere semper luctus. Aliquam nunc ex,
+                  ornare non mattis sed, scelerisque non nisl. Vivamus convallis
+                  bibendum urna eget consequat.{" "}
+                </p>
+              </div>
+            </div>
+          )}
+        </Skeleton>
+
         <h3 className={styles.exploreHeading}>EXPLORE MORE</h3>
         <div className={styles.exploreSection}>
           {/* <CardComponent />
@@ -84,7 +94,6 @@ export default function Product({product}) {
   );
 }
 
-
-Product.getInitialProps = ({query:{product}})=>{
-    return {product};
-}
+Product.getInitialProps = ({ query: { product } }) => {
+  return { product };
+};
