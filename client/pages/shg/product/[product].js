@@ -51,7 +51,7 @@ export default function Product({ product }) {
       currency: currency,
       name: "Svayam",
       description: "Test Transaction",
-      image: "https://bugbase.in/static/media/BugBaseFullFinal.181dc571.svg",
+      image: "https://i.ibb.co/Z2FtyBn/Frame-2.png",
       order_id: order_id,
       handler: async function (response) {
         try {
