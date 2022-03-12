@@ -14,6 +14,7 @@ export default function Navbar() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.user);
+
   return (
     <div className={styles.navContainer}>
       <div className={styles.navController}>
