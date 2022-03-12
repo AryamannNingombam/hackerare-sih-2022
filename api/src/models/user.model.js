@@ -47,6 +47,7 @@ UserSchema.methods.MatchPassword = async function (password) {
 UserSchema.methods.GetUserData = async function () {
   const user = this;
   return {
+    _id: user._id,
     username: user.username,
     email: user.email,
     firstName: user.firstName,

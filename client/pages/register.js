@@ -2,9 +2,12 @@ import Navbar from "components/Navbar";
 import React from "react";
 import styles from "../styles/Login.module.scss";
 import Link from "next/link";
-import { Button, Card, Form, Input } from "antd";
+import { Button, Card, Form, Input, message } from "antd";
+import { SignUp } from "services/auth.services";
+import { useRouter } from "next/router";
 
 export default function register() {
+  const router = useRouter();
   return (
     <>
       <Navbar />
@@ -20,21 +23,40 @@ export default function register() {
           <Form
             name="register-form"
             initialValues={{ remember: true }}
-            onSubmitCapture={(e) => {
-              e.preventDefault();
-              console.log("submit");
+            onFinish={async (e) => {
+              try {
+                const response = await SignUp(e);
+                console.log(response);
+                message.success("signed up!");
+                router.push("/dashboard");
+              } catch (err) {
+                console.log("ERROR");
+                console.log(err);
+                message.error("error signing up");
+              }
             }}
           >
             <Form.Item
-              name="Full Name"
+              name="firstName"
               rules={[
                 {
                   required: true,
-                  message: "Please input your Full Name!",
+                  message: "Please input your First Name!",
                 },
               ]}
             >
-              <Input placeholder="Full name" />
+              <Input placeholder="First name" />
+            </Form.Item>
+            <Form.Item
+              name="lastName"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Last Name!",
+                },
+              ]}
+            >
+              <Input placeholder="Last Name" />
             </Form.Item>
             <Form.Item
               name="email"
@@ -63,7 +85,7 @@ export default function register() {
               htmlType="submit"
               className={styles.loginButton}
             >
-              Continue
+              Sign Up
             </Button>
           </Form>
         </Card>

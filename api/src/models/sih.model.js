@@ -27,28 +27,24 @@ const SIHSchema = new mongoose.Schema({
   },
   members: {
     type: [mongoose.Types.ObjectId],
+    default: [],
   },
 });
 
 SIHSchema.methods.RemoveMember = async (_id) => {
-  const SIH = this;
-  SIH.members = SIH.members.filter((member) => member !== _id);
-  await SIH.save();
-  return SIH;
+  this.members = this.members.filter((member) => member !== _id);
 };
 
 SIHSchema.methods.AddMember = async (_id) => {
-  const SIH = this;
-  SIH.members.push(_id);
-  await SIH.save();
-  return SIH;
+  if (!this.members) {
+    this.members = [_id];
+  } else {
+    this.members.push(_id);
+  }
 };
 
 SIHSchema.methods.changeOwner = async (_id) => {
-  const SIH = this;
-  SIH.owner = _id;
-  await SIH.save();
-  return SIH;
+  this.owner = _id;
 };
 
 module.exports = mongoose.model("SIH", SIHSchema);

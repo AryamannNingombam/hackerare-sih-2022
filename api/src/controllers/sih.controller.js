@@ -1,4 +1,5 @@
 const SIHModel = require("../models/sih.model");
+const userModel = require("../models/user.model");
 
 exports.GetAllSIH = async (req, res, next) => {
   try {
@@ -19,11 +20,15 @@ exports.GetAllSIH = async (req, res, next) => {
 
 exports.AddSIH = async (req, res, next) => {
   try {
-    const sih = await SIHModel.create({
+    const sih = new SIHModel({
       ...req.body,
       owner: res.locals.uid,
+      members: [res.locals.uid],
     });
-    await sih.AddMember(res.locals.uid);
+    await sih.save();
+    const user = await userModel.findOne({ _id: res.locals.uid });
+    user.sih = sih._id;
+    await user.save();
     return res.status(200).json({
       success: true,
       sih,
