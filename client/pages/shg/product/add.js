@@ -46,7 +46,7 @@ export default function addProduct() {
     values.images = imageUrls;
     await AddProduct(values).then((res) => {
       message.success("Product added successfully");
-      router.push("/shg/products");
+      router.push("/shg");
     });
   };
 
@@ -136,7 +136,7 @@ export default function addProduct() {
               >
                 <Input.TextArea
                   rows={5}
-                  placeholder="Give a description of your Self Help Group"
+                  placeholder="Give a description of your product"
                 />
               </Form.Item>
               <Form.Item

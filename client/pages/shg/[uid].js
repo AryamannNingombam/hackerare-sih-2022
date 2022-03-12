@@ -19,14 +19,11 @@ export default function ViewSHG({ uid }) {
     GetAllProductsBySIH(uid)
   );
 
+  if (!isLoggedIn) {
+    message.error("Please login to request for joining this SHG");
+    router.push("/login");
+  }
   const checkUserType = () => {
-    // 0 owner
-    // 1 member
-    // -1 not a member
-    if (!isLoggedIn) {
-      message.error("Please login to view this page");
-      router.push("/login");
-    }
     const uid = user?.user?._id;
     const member = shg?.members.find((memberid) => memberid === uid);
     if (!member) {
@@ -41,11 +38,6 @@ export default function ViewSHG({ uid }) {
 
   console.log(shg);
   const OnRequestJoin = async (e) => {
-    if (!isLoggedIn) {
-      message.error("Please login to request for joining this SHG");
-      router.push("/login");
-      return;
-    }
     try {
       const response = await RequestSIH({
         sih: uid,
@@ -74,6 +66,7 @@ export default function ViewSHG({ uid }) {
       </div>
     );
   }
+
   return (
     <>
       <Navbar />
@@ -124,7 +117,21 @@ export default function ViewSHG({ uid }) {
           <h3>DESCRIPTION</h3>
           <p>{shg?.description}</p>
         </div>
-        <h3 className={styles.exploreHeading}>PRODUCTS</h3>
+        <h3 className={styles.exploreHeading}>
+          PRODUCTS{" "}
+          {checkUserType() === 0 && (
+            <>
+              <Button
+                onClick={() => {
+                  router.push("/shg/product/add/");
+                }}
+              >
+                Add Product
+              </Button>
+            </>
+          )}
+        </h3>
+
         <div className={styles.exploreSection}>
           {console.log(shgProducts)}
           {shgProducts && shgProducts.products.length === 0 ? (
@@ -132,7 +139,12 @@ export default function ViewSHG({ uid }) {
           ) : (
             shgProducts?.products?.map((product) => {
               return (
-                <CardComponent name={product.name} image={product.images[0]} />
+                <CardComponent
+                  name={product.name}
+                  image={product.images[0]}
+                  id={product._id}
+                  description={product.description}
+                />
               );
             })
           )}

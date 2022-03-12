@@ -6,8 +6,11 @@ import { useQuery } from "react-query";
 import { BuyProduct, GetProductDetails } from "services/product.services";
 import CardComponent from "components/CardComponentSecond";
 import { CreateOrder } from "services/razorpay.service";
-
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 export default function Product({ product }) {
+  const router = useRouter();
+  const { isLoggedIn } = useSelector((state) => state.user);
   const { data: productDetails, isLoading } = useQuery("productdetails", () =>
     GetProductDetails(product)
   );
@@ -130,7 +133,9 @@ export default function Product({ product }) {
                 <h1>{productDetails.name}</h1>
                 <h2>₹ {productDetails.sellPrice}</h2>
                 <Button
-                  onClick={onBuyNowClick}
+                  onClick={
+                    isLoggedIn ? onBuyNowClick : () => router.push("/login")
+                  }
                   type="primary"
                   className={styles.button}
                 >
