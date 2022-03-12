@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 
 export default function register() {
   const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
+
   return (
     <>
       <Navbar />
@@ -24,6 +26,7 @@ export default function register() {
             name="register-form"
             initialValues={{ remember: true }}
             onFinish={async (e) => {
+              setLoading(true)
               try {
                 const response = await SignUp(e);
                 console.log(response);
@@ -32,6 +35,8 @@ export default function register() {
               } catch (err) {
                 message.error("error signing up");
               }
+              setLoading(false)
+
             }}
           >
             <Form.Item
@@ -82,6 +87,8 @@ export default function register() {
               type="primary"
               htmlType="submit"
               className={styles.loginButton}
+              loading={loading}
+              disabled={loading}
             >
               Sign Up
             </Button>

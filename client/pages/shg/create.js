@@ -181,6 +181,7 @@ export default function create() {
                 htmlType="submit"
                 className={styles.loginButton}
                 disabled={loading}
+                loading={loading}
               >
                 Create Your SHG
               </Button>

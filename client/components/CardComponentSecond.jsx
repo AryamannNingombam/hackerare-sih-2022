@@ -10,7 +10,7 @@ export default function CardComponent({ name, image, state, id }) {
 
   return (
     <Card hoverable className={styles.cardContainer}>
-      <Image src={image} layout="fill" />
+      <Image src={image} layout="fill" style={{objectFit:"cover"}} />
       <h2>{name}</h2>
       <h3>{state}</h3>
       <Button

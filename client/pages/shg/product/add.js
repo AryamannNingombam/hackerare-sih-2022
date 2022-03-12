@@ -32,10 +32,12 @@ export default function addProduct() {
   // }
 
   const [fileList, setFileList] = useState([]);
+  const [loading,setLoading] = useState(false)
 
   const router = useRouter();
 
   const onFormSubmit = async (values) => {
+    setLoading(true)
     console.log(values);
     console.log(fileList);
     values.images = fileList.map(async (image) => {
@@ -48,6 +50,7 @@ export default function addProduct() {
       message.success("Product added successfully");
       router.push("/shg/products");
     });
+    setLoading(false)
   };
 
   const handleChange = ({ fileList }) => setFileList(fileList);
@@ -174,6 +177,8 @@ export default function addProduct() {
                 type="primary"
                 htmlType="submit"
                 className={styles.loginButton}
+                loading={loading}
+                disabled={loading}
               >
                 Add this Product
               </Button>
